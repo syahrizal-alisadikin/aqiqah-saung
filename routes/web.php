@@ -21,11 +21,10 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::get('/forbodden', [HomeController::class, 'error'])->name('forbodden');
-Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 route::prefix('dashboard')
+    ->middleware('auth')
     ->group(function () {
         Route::get('/admin', [DashboardController::class, 'index'])->name('dashboard');
-        Route::get('/home', [HomeController::class, 'index'])->name('dashboard');
         Route::get('/forbodden', [HomeController::class, 'error'])->name('forbodden');
     });

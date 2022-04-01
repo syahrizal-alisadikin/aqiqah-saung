@@ -25,7 +25,7 @@
         <ul class="navbar-nav  justify-content-end">
           <li class="nav-item d-flex align-items-center">
             <a href="javascript:void(0)" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                ADMIN  <i class="fa fa fa-user cursor-pointer"></i>
+                {{ Auth::user()->name }}  
                 </a>
           </li>
          

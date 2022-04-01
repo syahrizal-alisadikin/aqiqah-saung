@@ -182,6 +182,10 @@
                         </span>
                     @enderror
                   </div>
+                  <div class="mb-3">
+                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Password Confirmation" required autocomplete="new-password">
+
+                  </div>
                   <div class="form-check form-check-info text-left">
                     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
                     <label class="form-check-label" for="flexCheckDefault">

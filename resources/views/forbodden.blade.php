@@ -24,7 +24,7 @@
             <div class="card card-plain mt-8">
               <div class="card-header pb-0 text-left bg-transparent text-center">
                 <h3 class="font-weight-bolder text-info text-gradient">403 Forbodden</h3>
-                <a href="{{ route('home') }}" class="btn btn-primary">Kembali ke Beranda</a>
+                <a href="{{ route('dashboard') }}" class="btn btn-primary">Kembali ke Beranda</a>
               </div>
               
               
