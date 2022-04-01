@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,5 +20,12 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::get('/forbodden', [HomeController::class, 'error'])->name('forbodden');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+route::prefix('dashboard')
+    ->group(function () {
+        Route::get('/admin', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/home', [HomeController::class, 'index'])->name('dashboard');
+        Route::get('/forbodden', [HomeController::class, 'error'])->name('forbodden');
+    });
