@@ -2,6 +2,11 @@
 @section('title', 'Dashboard ADMIN')
 
 @section('content')
+<div class="row py-3">
+  <div class="container">
+    <h3>Welcome {{ Auth::user()->name }}</h3>
+  </div>
+</div>
 <div class="row">
     <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
       <div class="card">

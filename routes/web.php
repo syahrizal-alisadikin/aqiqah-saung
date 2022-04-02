@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\KeuanganController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes();
@@ -26,5 +28,8 @@ route::prefix('dashboard')
     ->middleware('auth')
     ->group(function () {
         Route::get('/admin', [DashboardController::class, 'index'])->name('dashboard');
+        Route::resource('keuangan', KeuanganController::class,['except' => ['show']]);
+        Route::resource('orders', OrderController::class,['except' => ['show']]);
+        Route::get('/keuangan/pengeluaran', [KeuanganController::class, 'pengeluaran'])->name('pengeluaran.index');
         Route::get('/forbodden', [HomeController::class, 'error'])->name('forbodden');
     });
