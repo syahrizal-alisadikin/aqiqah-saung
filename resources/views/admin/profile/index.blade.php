@@ -47,6 +47,24 @@
                 <th class=" text-uppercase   opacity-7">{{ $user->name }}</th>
                 
               </tr>
+              <tr>
+                <th class=" text-uppercase  opacity-7" style="width: 10%">Email</th>
+                <th class=" text-uppercase text-secondary opacity-7" style="width: 5%">:</th>
+                <th class=" text-uppercase   opacity-7">{{ $user->email }}</th>
+                
+              </tr>
+              <tr>
+                <th class=" text-uppercase  opacity-7" style="width: 10%">Phone</th>
+                <th class=" text-uppercase text-secondary opacity-7" style="width: 5%">:</th>
+                <th class=" text-uppercase   opacity-7">{{ $user->phone }}</th>
+                
+              </tr>
+              <tr>
+                <th class=" text-uppercase  opacity-7" style="width: 10%">Alamat</th>
+                <th class=" text-uppercase text-secondary opacity-7" style="width: 5%">:</th>
+                <th class=" text-uppercase   opacity-7">{{ $user->alamat }}</th>
+                
+              </tr>
             </tbody>
           </table>
         </div>
@@ -55,22 +73,66 @@
     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
       <div class="card">
         <div class="card-body">
-          <a href="#" class="btn btn-danger"><i class="fa fa-plus me-2"></i>Pengeluaran</a>
+          <form action="{{ route('profile.update', $user->id) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" class="form-control @error('name') is-invalid @enderror" value="{{ old('name',$user->name) }}" placeholder="Name" aria-label="Name" name="name" aria-describedby="email-addon">
+              @error('name')
+                  <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+              @enderror
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email',$user->email) }}" placeholder="Email" aria-label="Email" aria-describedby="email-addon">
+              @error('email')
+                  <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+              @enderror
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone</label>
+              <input type="number" name="phone" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone',$user->phone) }}" placeholder="Phone" aria-label="Name" aria-describedby="email-addon">
+                    @error('phone')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+            </div>
+            <div class="form-group">
+              <label for="alamat">Alamat</label>
+              <textarea name="alamat" id="" cols="30" rows="5" class="form-control @error('alamat') is-invalid @enderror" placeholder="Alamat">{{ old('alamat',$user->alamat) }}</textarea>
+              @error('alamat')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Password" aria-label="Password" aria-describedby="password-addon">
+              @error('password')
+                  <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+              @enderror
+            </div>
+            <div class="form-group">
+              <label for="password_confirmation">Password Confirmation</label>
+              <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
+            </div>
+            <div class="form-group">
+              <label for="image">Image</label>
+              <input type="file" class="form-control" id="image" name="image">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
           
-          <div class="table-responsive p-0">
-            <table class="table align-items-center mb-0" id="keluar" style="width:100%; !important">
-              <thead>
-                <tr>
-                  <th class=" text-uppercase text-secondary opacity-7">No</th>
-                  <th class="text-center text-uppercase text-secondary  opacity-7">Name</th>
-                  <th class="text-center text-uppercase text-secondary  opacity-7">Nominal</th>
-                  <th class="text-center text-uppercase text-secondary  opacity-7">Tanggal keluar</th>
-                  <th class="text-center text-uppercase text-secondary opacity-7">Metode</th>
-                </tr>
-              </thead>
-              
-            </table>
-          </div>
+          
         </div>
       </div>
     </div>
