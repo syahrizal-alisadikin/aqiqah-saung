@@ -15,6 +15,20 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('product_id');
+            $table->string('name');
+            $table->string('nama_ayah');
+            $table->string('nama_ibu');
+            $table->string('phone');
+            $table->string('harga');
+            $table->string('quantity');
+            $table->string('alamat')->nullable();
+            $table->string('note')->nullable();
+            $table->string('status')->default('PENDING',"POTONG","KIRIM","SELESAI","BATAL","LUNAS");
+            $table->date('tanggal_potong');
+            $table->date('tanggal_acara')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

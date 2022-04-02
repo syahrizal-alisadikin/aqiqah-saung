@@ -74,7 +74,7 @@
       </li>
        @endif
         <li class="nav-item">
-          <a class="nav-link  " href="../pages/rtl.html">
+          <a class="nav-link {{ setActive('dashboard/orders'. '*') }} " href="{{ route('orders.index') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 46 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>Orders</title>
@@ -98,7 +98,7 @@
           <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
         </li>
         <li class="nav-item">
-          <a class="nav-link  " href="../pages/profile.html">
+          <a class="nav-link {{ setActive('dashboard/profile'. '*') }} " href="{{ route('profile.index') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 46 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>customer-support</title>
@@ -119,7 +119,8 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link  " type="submit">
+          <a class="nav-link  " href="{{route('logout')}}"
+          onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 40 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>document</title>
@@ -138,7 +139,9 @@
             <span class="nav-link-text ms-1">Logout</span>
           </a>
         </li>
-        
+        <form id="logout-form" action="{{route('logout')}}" method="POST" style="display: none">
+          @csrf    
+       </form>
       </ul>
     </div>
     <div class="sidenav-footer mx-3 ">

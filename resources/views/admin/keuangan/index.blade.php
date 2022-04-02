@@ -33,7 +33,7 @@
     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
       <div class="card">
         <div class="card-body">
-          <a href="#" class="btn btn-primary"><i class="fa fa-plus"></i>Pemasukan</a>
+          <a href="#" class="btn btn-primary"><i class="fa fa-plus me-2"></i>Pemasukan</a>
           <div class="table-responsive p-0">
             <table class="table align-items-center mb-0" id="masuk">
               <thead>
@@ -54,7 +54,7 @@
     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
       <div class="card">
         <div class="card-body">
-          <a href="#" class="btn btn-danger"><i class="fa fa-plus"></i>Pengeluaran</a>
+          <a href="#" class="btn btn-danger"><i class="fa fa-plus me-2"></i>Pengeluaran</a>
           
           <div class="table-responsive p-0">
             <table class="table align-items-center mb-0" id="keluar" style="width:100%; !important">
@@ -75,9 +75,7 @@
     </div>
   </div>  
 </div>
-<div class="row">
-  
-</div>
+
 
 
  
