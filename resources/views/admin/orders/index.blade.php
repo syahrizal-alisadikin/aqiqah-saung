@@ -12,7 +12,7 @@
 <div class="row">
   <div class="card">
     <div class="card-body">
-      <a href="#" class="btn btn-primary"><i class="fa fa-plus me-2"></i>Orders</a>
+      <a href="{{ route('orders.create') }}" class="btn btn-primary"><i class="fa fa-plus me-2"></i>Orders</a>
       <div class="table-responsive p-0">
         <table class="table align-items-center mb-0" id="orders"  style="width:100%; !important">
           <thead>

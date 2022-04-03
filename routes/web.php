@@ -33,5 +33,6 @@ route::prefix('dashboard')
         Route::resource('orders', OrderController::class,['except' => ['show']]);
         Route::resource('profile', ProfileController::class,['except' => ['show']]);
         Route::get('/keuangan/pengeluaran', [KeuanganController::class, 'pengeluaran'])->name('pengeluaran.index');
+        Route::post('/keuangan/pengeluaran', [KeuanganController::class, 'pengeluaranStore'])->name('keuangan.pengeluaran');
         Route::get('/forbodden', [HomeController::class, 'error'])->name('forbodden');
     });
