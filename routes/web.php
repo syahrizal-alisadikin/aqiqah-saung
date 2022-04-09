@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\KeuanganController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,7 +33,9 @@ route::prefix('dashboard')
         Route::get('/admin', [DashboardController::class, 'index'])->name('dashboard');
         Route::resource('keuangan', KeuanganController::class,['except' => ['show']]);
         Route::resource('orders', OrderController::class,['except' => ['show']]);
-        Route::resource('products', ProductController::class,['except' => ['show']]);
+        Route::resource('products', ProductController::class);
+        Route::post('products-rekanan/{id}', [ProductController::class,'harga'])->name('harga-rekanan');
+        Route::resource('users', UserController::class);
         Route::resource('profile', ProfileController::class,['except' => ['show']]);
         Route::get('/keuangan/pengeluaran', [KeuanganController::class, 'pengeluaran'])->name('pengeluaran.index');
         Route::post('/keuangan/pengeluaran', [KeuanganController::class, 'pengeluaranStore'])->name('keuangan.pengeluaran');

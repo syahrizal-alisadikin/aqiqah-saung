@@ -23,6 +23,7 @@ class CreateProductsTable extends Migration
             $table->bigInteger('sell_price');
             $table->integer('stock');
             $table->integer('stock_sakit')->default(0);
+            $table->integer('stock_mati')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

@@ -12,12 +12,13 @@
 <div class="row">
   <div class="card">
     <div class="card-body">
-      <h4>Tambah Produk</h4>
-      <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+      <h4>Edit Produk</h4>
+      <form action="{{ route('products.update',$product->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
+        @method("PUT")
         <div class="form-group">
           <label for="name">Name</label>
-          <input type="text" required class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" placeholder="Name" aria-label="Name" name="name" aria-describedby="email-addon">
+          <input type="text" required class="form-control @error('name') is-invalid @enderror" value="{{ old('name',$product->name) }}" placeholder="Name" aria-label="Name" name="name" aria-describedby="email-addon">
           @error('name')
               <span class="invalid-feedback" role="alert">
                   <strong>{{ $message }}</strong>
@@ -28,11 +29,11 @@
           <label for="email">Type</label>
           <select name="type" class="form-control" required id="">
             <option value="">Pilih Type</option>
-            <option value="A" {{ old('type') == "A" ? "selected" : "" }}>A</option>
-            <option value="B" {{ old('type') == "B" ? "selected" : "" }}>B</option>
-            <option value="C" {{ old('type') == "C" ? "selected" : "" }}>C</option>
-            <option value="D" {{ old('type') == "D" ? "selected" : "" }}>D</option>
-            <option value="E" {{ old('type') == "E" ? "selected" : "" }}>E</option>
+            <option value="A" {{ old('type',$product->type) == "A" ? "selected" : "" }}>A</option>
+            <option value="B" {{ old('type',$product->type) == "B" ? "selected" : "" }}>B</option>
+            <option value="C" {{ old('type',$product->type) == "C" ? "selected" : "" }}>C</option>
+            <option value="D" {{ old('type',$product->type) == "D" ? "selected" : "" }}>D</option>
+            <option value="E" {{ old('type',$product->type) == "E" ? "selected" : "" }}>E</option>
           </select>
           @error('type')
               <span class="invalid-feedback" role="alert">
@@ -44,8 +45,8 @@
           <label for="phone">Jenis</label>
           <select name="jenis" required class="form-control" id="">
             <option value="">Pilih Jenis</option>
-            <option value="Jantan" {{ old('jenis') == "Jantan" ? "selected" : "" }}>Jantan</option>
-            <option value="Betina" {{ old('jenis') == "Betina" ? "selected" : "" }}>Betina</option>
+            <option value="Jantan" {{ old('jenis',$product->jenis) == "Jantan" ? "selected" : "" }}>Jantan</option>
+            <option value="Betina" {{ old('jenis',$product->jenis) == "Betina" ? "selected" : "" }}>Betina</option>
           </select>
                 @error('jenis')
                     <span class="invalid-feedback" role="alert">
@@ -55,7 +56,7 @@
         </div>
         <div class="form-group">
           <label for="alamat">Harga Beli</label>
-          <input type="number" name="buy_price" min="0" value="{{ old('buy_price') }}" required class="form-control @error('buy_price') is-invalid @enderror" placeholder="Masukan Harga Beli" id="">
+          <input type="number" name="buy_price" min="0" value="{{ old('buy_price',$product->buy_price) }}" required class="form-control @error('buy_price') is-invalid @enderror" placeholder="Masukan Harga Beli" id="">
           @error('buy_price')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -64,7 +65,7 @@
         </div>
         <div class="form-group">
           <label for="alamat">Harga Jual</label>
-          <input type="number" name="sell_price" min="0" value="{{ old('sell_price') }}" required class="form-control @error('sell_price') is-invalid @enderror" placeholder="Masukan Harga Jual" id="">
+          <input type="number" name="sell_price" min="0" value="{{ old('sell_price',$product->sell_price) }}" required class="form-control @error('sell_price') is-invalid @enderror" placeholder="Masukan Harga Jual" id="">
           @error('sell_price')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -75,15 +76,15 @@
      
         <div class="form-group">
           <label for="image">Stok Sakit (Opsional)</label>
-          <input type="number" class="form-control" min="0" name="stock_sakit" value="0" placeholder="Masukan Stok sakit">
+          <input type="number" class="form-control" min="0" name="stock_sakit" value="{{ old('stock_sakit',$product->stock_sakit) }}" placeholder="Masukan Stok sakit">
         </div>
         <div class="form-group">
           <label for="image">Stok Mati (Opsional)</label>
-          <input type="number" class="form-control" min="0" name="stock_mati" value="0" placeholder="Masukan Stok mati">
+          <input type="number" class="form-control" min="0" name="stock_mati" value="{{ old('stock_mati',$product->stock_mati) }}" placeholder="Masukan Stok mati">
         </div>
         <div class="form-group">
           <label for="image">Total Stok</label>
-          <input type="number" required min="0" class="form-control @error('stock') is-invalid @enderror" name="stock" value="0" placeholder=" Masukan Stok Total">
+          <input type="number" required min="0" class="form-control @error('stock') is-invalid @enderror" name="stock" value="{{ old('stock',$product->stock) }}" placeholder=" Masukan Stok Total">
           @error('stock')
           <span class="invalid-feedback" role="alert">
               <strong>{{ $message }}</strong>
@@ -92,7 +93,7 @@
         </div>
         <div class="form-group">
           <label for="image">Deskripsi</label>
-          <textarea name="description" id="" cols="30" rows="5" class="form-control @error('description') is-invalid @enderror" placeholder="Masukan Deskripsi">{{ old('description') }}</textarea>
+          <textarea name="description" id="" cols="30" rows="5" class="form-control @error('description') is-invalid @enderror" placeholder="Masukan Deskripsi">{{ old('description',$product->description) }}</textarea>
           @error('description')
           <span class="invalid-feedback" role="alert">
               <strong>{{ $message }}</strong>

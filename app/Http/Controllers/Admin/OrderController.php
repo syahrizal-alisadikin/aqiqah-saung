@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use DataTables;
 class OrderController extends Controller
@@ -34,6 +36,8 @@ class OrderController extends Controller
 
     public function create()
     {
-        return view('admin.orders.create');
+        $users = User::where('roles','USER')->get();
+        $products = Product::all();
+        return view('admin.orders.create',compact('users','products'));
     } 
 }

@@ -20,10 +20,11 @@ class CreateOrdersTable extends Migration
             $table->string('ref')->nullable();
             $table->string('name');
             $table->string('nama_ayah');
-            $table->string('nama_ibu');
+            $table->string('nama_ibu')->nullable();
             $table->string('phone');
-            $table->string('harga');
             $table->string('quantity');
+            $table->string('harga');
+            $table->string('total_harga');
             $table->string('alamat')->nullable();
             $table->string('note')->nullable();
             $table->string('status')->default('PENDING',"POTONG","KIRIM","SELESAI","BATAL","LUNAS");

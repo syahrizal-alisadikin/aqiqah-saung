@@ -1,6 +1,13 @@
 @extends('layouts.admin')
 @section('title', 'Dashboard ADMIN')
-
+@push('addon-style')
+    <style>
+      .select2 {
+      width:100%!important;
+      
+      }
+    </style>
+@endpush
 @section('content')
 <div class="row py-3">
   <div class="container">
@@ -15,6 +22,42 @@
       <h4>Tambah Orders</h4>
       <form action="" method="POST" enctype="multipart/form-data">
         @csrf
+       @if (Auth::user()->roles == "ADMIN")
+       <div class="form-group">
+        <label for="name">Rekanan</label>
+        <select name="user_id" class="form-control" id="rekanan">
+          <option value="">Pilih Rekanan</option>
+          <option value="{{ auth()->user()->id }}">{{ auth()->user()->name }}</option>
+        @forelse ($users as $item)
+            <option value="{{ $item->id }}">{{ $item->name }}</option>
+        @empty
+            <option value="">Belum ada data</option>
+        @endforelse
+        </select>
+        @error('user_id')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
+      </div>
+       @endif
+       <div class="form-group">
+        <label for="name">Produk</label>
+        <select name="product_id" required class="form-control" id="product">
+          <option value="">Pilih Produk</option>
+          @forelse ($products as $item)
+              <option value="{{ $item->id }}">{{ $item->name }}</option>
+          @empty
+              <option value="">Belum ada data</option>
+          @endforelse
+          
+        </select>
+        @error('name')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
+      </div>
         <div class="form-group">
           <label for="name">Name</label>
           <input type="text" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" placeholder="Name" aria-label="Name" name="name" aria-describedby="email-addon">
@@ -25,14 +68,24 @@
           @enderror
         </div>
         <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="Email" aria-label="Email" aria-describedby="email-addon">
-          @error('email')
+          <label for="name">Nama Ayah (Binti)</label>
+          <input type="text" required class="form-control @error('nama_ayah') is-invalid @enderror" value="{{ old('nama_ayah') }}" placeholder="Nama Ayah" aria-label="Name" name="nama_ayah" aria-describedby="email-addon">
+          @error('nama_ayah')
               <span class="invalid-feedback" role="alert">
                   <strong>{{ $message }}</strong>
               </span>
           @enderror
         </div>
+        <div class="form-group">
+          <label for="name">Nama Ibu (optional)</label>
+          <input type="text"  class="form-control @error('nama_ibu') is-invalid @enderror" value="{{ old('nama_ibu') }}" placeholder="Nama Ibu" aria-label="Name" name="name" aria-describedby="email-addon">
+          @error('nama_ayah')
+              <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+              </span>
+          @enderror
+        </div>
+       
         <div class="form-group">
           <label for="phone">Phone</label>
           <input type="number" name="phone" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}" placeholder="Phone" aria-label="Name" aria-describedby="email-addon">
@@ -43,6 +96,35 @@
                 @enderror
         </div>
         <div class="form-group">
+          <label for="email">Harga</label>
+          <input type="text" name="harga" readonly id="hargaView"  class="form-control ">
+          <input type="hidden" name="harga" readonly id="hargaInput"  class="form-control ">
+          @error('harga')
+              <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+              </span>
+          @enderror
+        </div>
+        <div class="form-group">
+          <label for="email">Quantity</label>
+          <input type="number" name="quantity" required min="0" id="quantity" class="form-control @error('quantity') is-invalid @enderror" value="{{ old('quantity') }}" placeholder="Quantity" >
+          @error('quantity')
+              <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+              </span>
+          @enderror
+        </div>
+        <div class="form-group">
+          <label for="email">Total Harga</label>
+          <input type="text" name="total_harga"  class="form-control" id="totalHargaView" value="{{ old('total_harga') }}" placeholder="Total Harga" >
+          <input type="hidden" name="total_harga"  class="form-control totalHarga" value="{{ old('total_harga') }}"  >
+          @error('quantity')
+              <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+              </span>
+          @enderror
+        </div>
+        <div class="form-group">
           <label for="alamat">Alamat</label>
           <textarea name="alamat" id="" cols="30" rows="5" class="form-control @error('alamat') is-invalid @enderror" placeholder="Alamat">{{ old('alamat') }}</textarea>
           @error('alamat')
@@ -51,25 +133,7 @@
             </span>
         @enderror
         </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Password" aria-label="Password" aria-describedby="password-addon">
-          @error('password')
-              <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-              </span>
-          @enderror
-        </div>
-        <div class="form-group">
-          <label for="password_confirmation">Password Confirmation</label>
-          <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" id="password_confirmation" name="password_confirmation">
-          @error('password_confirmation')
-          <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-          </span>
-      @enderror
         
-        </div>
         <div class="form-group">
           <label for="image">Image</label>
           <input type="file" class="form-control" id="image" name="image">
@@ -85,6 +149,11 @@
  
 @endsection
 @push('addon-script')
+<script>
+  $(document).ready(function() {
+    $('#rekanan ,#product').select2();
+});
+</script>
 <script>
     var orders = $('#orders').DataTable({
        processing: true,
@@ -128,5 +197,36 @@
     })
    
   </script>
-    
+    <script>
+      $(document).ready(function(){
+        $("#product").on("change",function(){
+                const id =  $(this).val()
+                if (id) {
+                jQuery.ajax({
+                     url: '/api/product/'+id,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (response) {
+                      $('#hargaView').val("Rp "+ new Intl.NumberFormat('id-ID', {
+                                maximumSignificantDigits: 5
+                            }).format(response.data.sell_price))
+                       
+                       $("#hargaInput").val(response.data.sell_price)
+                  
+                        },
+
+                    });
+                }
+            })
+        $("#quantity").on("keyup",function(){
+            const quantity =  $(this).val()
+            const harga = $("#hargaInput").val()
+            const total = quantity * harga;
+            $("#totalHargaView").val("Rp "+ new Intl.NumberFormat('id-ID', {
+                maximumSignificantDigits: 5
+            }).format(total))
+            $(".totalHarga").val(total)
+        })
+      })
+    </script>
 @endpush
