@@ -17,6 +17,7 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('product_id');
+            $table->string('ref')->nullable();
             $table->string('name');
             $table->string('nama_ayah');
             $table->string('nama_ibu');
