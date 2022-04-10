@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Order;
 
 use Illuminate\Http\Request;
 
@@ -36,10 +37,23 @@ class ApiController extends Controller
     }
     public function product($id)
     {
+        $user = User::find(request()->user_id);
         $product = Product::with('rekanan')->find($id);
         return response()->json([
             'status' => 'success',
             'message' => 'Product berhasil diambil',
+            'data' => $product,
+            'user' => $user
+
+        ]);
+    }
+
+    public function order($id)
+    {
+        $product = Order::find($id);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Order berhasil diambil',
             'data' => $product,
 
         ]);

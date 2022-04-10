@@ -4,7 +4,7 @@
 @section('content')
 <div class="row py-3">
   <div class="container">
-    <h3>Harga  {{ $product->name }} Rekanan</h3>
+    <h3>Harga  {{ $product->name }} {{ $product->type }} {{ $product->jenis }} Rekanan</h3>
   </div>
 </div>
 
