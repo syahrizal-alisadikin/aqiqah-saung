@@ -13,6 +13,6 @@ class Product extends Model
 
     public function rekanan()
     {
-        return $this->belongsTo(HargaRekanan::class);
+        return $this->belongsTo(HargaRekanan::class,'id','product_id');
     }
 }

@@ -45,11 +45,11 @@
         <label for="name">Produk</label>
         <select name="product_id" required class="form-control" id="product">
           <option value="">Pilih Produk</option>
-          @forelse ($products as $item)
+          {{-- @forelse ($products as $item)
               <option value="{{ $item->id }}">{{ $item->name }}</option>
           @empty
               <option value="">Belum ada data</option>
-          @endforelse
+          @endforelse --}}
           
         </select>
         @error('name')
@@ -199,19 +199,47 @@
   </script>
     <script>
       $(document).ready(function(){
+        $("#rekanan").on("change",function(){
+                const id =  $(this).val();
+                console.log(id)
+                if (id) {
+                jQuery.ajax({
+                     url: '/api/rekanan/'+id,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (response) {
+                      $('select[name="product_id"]').empty();
+                      $('select[name="product_id"]').append('<option value="">Pilih Produk</option>');
+                       if(response.message == "admin" ){
+                        $.each(response.data, function (key, value) {
+                                $('select[name="product_id"]').append('<option value="' +  value.id + '">' + value.name + '</option>');
+                        });
+                       }else{
+                        $.each(response.data, function (key, value) {
+                                $('select[name="product_id"]').append('<option value="' +  value.id + '">' + value.name + '</option>');
+                        });
+                       }
+                      console.log(response)
+                  
+                        },
+
+                    });
+                }
+            })
         $("#product").on("change",function(){
                 const id =  $(this).val()
+
                 if (id) {
                 jQuery.ajax({
                      url: '/api/product/'+id,
-                    type: "GET",
+                    type: "GET", 
                     dataType: "json",
                     success: function (response) {
                       $('#hargaView').val("Rp "+ new Intl.NumberFormat('id-ID', {
                                 maximumSignificantDigits: 5
-                            }).format(response.data.sell_price))
+                            }).format(response.data.rekanan.harga))
                        
-                       $("#hargaInput").val(response.data.sell_price)
+                       $("#hargaInput").val(response.data.rekanan.harga)
                   
                         },
 
