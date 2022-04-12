@@ -96,6 +96,19 @@
                 @enderror
         </div>
         <div class="form-group">
+          <label for="jk">Jenis Kelamin</label>
+          <select name="jk" class="form-select" required id="jk">
+            <option value="">Pilih Jenis Kelamin</option>
+            <option value="0">Perempuan</option>
+            <option value="1">Laki-Laki</option>
+          </select>
+                @error('jk')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+        </div>
+        <div class="form-group">
           <label for="email">Harga</label>
           <input type="text" name="harga" readonly id="hargaView"  class="form-control ">
           <input type="hidden" name="harga" readonly id="hargaInput"  class="form-control ">
@@ -177,49 +190,7 @@
     $('#rekanan ,#product').select2();
 });
 </script>
-<script>
-    var orders = $('#orders').DataTable({
-       processing: true,
-  
-        serverSide:true,
-        ordering:true,
-        ajax:{
-          url: '{!! url()->current() !!}',
-        },
-        columns:[
-          { data: 'DT_RowIndex', name:'DT_RowIndex'},
-          
-          { data: 'name', name:'name'},
-          { data: 'nominal', name:'nominal'},
-          { data: 'tanggal', name:'tanggal'},
-          { data: 'metode', name:'metode'},
-          
-        ],
-        columnDefs: [
-              {
-                  "targets": 0, // your case first column
-                  "className": "text-center",
-              }, 
-               {
-                  "targets": 1, // your case first column
-                  "className": "text-center",
-              }, 
-              {
-                  "targets": 2, // your case first column
-                  "className": "text-center",
-              }, 
-              {
-                  "targets": 3, // your case first column
-                  "className": "text-center",
-              },
-              {
-                  "targets": 4, // your case first column
-                  "className": "text-center",
-              },   
-          ]
-    })
-   
-  </script>
+
     <script>
       $(document).ready(function(){
         $("#rekanan").on("change",function(){

@@ -106,6 +106,19 @@
                 @enderror
         </div>
         <div class="form-group">
+          <label for="jk">Jenis Kelamin</label>
+          <select name="jk" required class="form-select" id="">
+            <option value="">Pilih Jenis Kelamin</option>
+            <option value="0" {{ $order->jk == 0 ? "selected" : ""}}>Perempuan</option>
+            <option value="1" {{ $order->jk == 1 ? "selected" : ""}}>Laki-Laki</option>
+          </select>
+                @error('jk')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+        </div>
+        <div class="form-group">
           <label for="email">Harga</label>
           <input type="text" name="harga" readonly id="hargaView" value="{{ moneyFormat($order->harga) }}" class="form-control ">
           <input type="hidden" name="harga" readonly id="hargaInput" value="{{ $order->harga  }}" class="form-control ">

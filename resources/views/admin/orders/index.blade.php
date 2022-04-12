@@ -16,26 +16,27 @@
         <div class="row">
           <div class="col">
             <label for="">Nama</label>
-            <input type="text" class="form-control" placeholder="Nama">
+            <input type="text" class="form-control" placeholder="Nama Anak" id="name">
           </div>
           <div class="col">
             <label for="">Nama Ayah</label>
-            <input type="text" class="form-control" placeholder="Nama">
+            <input type="text" class="form-control" placeholder="Nama Ayah" id="nama_ayah">
           </div>
           <div class="col">
+            <label for="">No PO</label>
+            <input type="text" class="form-control" placeholder="No Po" id="ref">
+          </div>
+         
+        </div>
+        <div class="row">
+          <div class="col">
             <label for="">Rekanan</label>
-            <select name="user_id" id="user_id" class="form-control">
+            <select name="user_id" id="user_id" class="form-select">
               <option value="">Pilih Rekanan</option>
               @foreach ($users as $user)
               <option value="{{ $user->id }}">{{ $user->name }}</option>
               @endforeach
             </select>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <label for="">No PO</label>
-            <input type="text" class="form-control" placeholder="Nama">
           </div>
           <div class="col">
             <label for="">Status</label>
@@ -50,16 +51,36 @@
             </select>
           </div>
           <div class="col">
+           <div class="form-group">
             <label for="">Tanggal</label>
-           <input type="date" name="tanggal" class="form-control" id="tanggal">
+            <div class="input-group">
+              <input type="text" class="form-control" id="created_at" name="created_at" value="" />
+              <span class="input-group-addon" style="margin-left: ; margin-top:5px">
+                <i class="fa fa-calendar fa-lg" aria-hidden="true"></i> 
+              </span>
+          </div>
+           </div>
+
           </div>
         </div>
-        <div class="row">
+        <div class="row justify-content-between">
           {{-- Button Simpan --}}
-          <div class="col">
-            <button type="submit" class="btn btn-primary btn-block">
+          <div class="col  ">
+             
+
+          </div>
+          <div class="col pt-3 text-center">
+            <button type="button" class="btn btn-primary btn-block" id="search">
               <i class="fa fa-search"></i> Cari
             </button>
+            <button class="btn btn-success btn-block">
+              <i class="fa fa-download me-1"></i>Download PDF
+            </button>
+            <button class="btn btn-warning btn block">
+              <i class="fa fa-download me-1"></i>Download EXCEL
+            </button>
+
+        </div>
         </div>
       </form>
     </div>
@@ -94,15 +115,27 @@
  
 @endsection
 @push('addon-script')
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     var orders = $('#orders').DataTable({
        processing: true,
-  
         serverSide:true,
         ordering:true,
+        searching: false,
         ajax:{
           url: '{!! url()->current() !!}',
+          data: function (izal) {
+                          izal.status = $('#status').val();
+                          izal.user_id = $('#user_id').val();
+                          izal.nama_ayah = $('#nama_ayah').val();
+                          izal.name = $('#name').val();
+                          izal.ref = $('#ref').val();
+                          izal.created_at = $('#created_at').val();
+                        
+                      },
         },
+
         columns:[
           { data: 'ref', name:'ref'},
           
@@ -160,17 +193,33 @@
               },  
           ]
     })
+
+    // Search
+    $("#search").on('click',function (e) {
+        $('#orders').DataTable().draw(true);
+    });
+
    
   </script>
 
   <script>
+    $(document).ready(function(){
+      $('#user_id, #status').select2();
+
+      // Date Picker
+      $("#created_at").daterangepicker({
+        // showDropdowns: true,
+       
+      });
+
+    });
     function ChangeStatus(id)
     {
       var token = $("meta[name='csrf-token']").attr("content");
       if (id) 
       {
         jQuery.ajax({
-              url: '/api/order/'+id,
+            url: '/api/order/'+id,
             type: "GET",
             dataType: "json",
             success: function (response) {

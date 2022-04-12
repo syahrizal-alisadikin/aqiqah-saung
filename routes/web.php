@@ -33,6 +33,7 @@ route::prefix('dashboard')
         Route::get('/admin', [DashboardController::class, 'index'])->name('dashboard');
         Route::resource('keuangan', KeuanganController::class,['except' => ['show']]);
         Route::resource('orders', OrderController::class,['except' => ['show']]);
+        Route::get('orders/pdf/{id}', [OrderController::class, 'pdf'])->name('orders.pdf');
         Route::resource('products', ProductController::class);
         Route::post('products-rekanan/{id}', [ProductController::class,'harga'])->name('harga-rekanan');
         Route::resource('users', UserController::class);
