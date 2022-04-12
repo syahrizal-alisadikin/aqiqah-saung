@@ -10,6 +10,60 @@
 
 
 <div class="row">
+  <div class="card mb-4">
+    <div class="card-body">
+      <form action="#">
+        <div class="row">
+          <div class="col">
+            <label for="">Nama</label>
+            <input type="text" class="form-control" placeholder="Nama">
+          </div>
+          <div class="col">
+            <label for="">Nama Ayah</label>
+            <input type="text" class="form-control" placeholder="Nama">
+          </div>
+          <div class="col">
+            <label for="">Rekanan</label>
+            <select name="user_id" id="user_id" class="form-control">
+              <option value="">Pilih Rekanan</option>
+              @foreach ($users as $user)
+              <option value="{{ $user->id }}">{{ $user->name }}</option>
+              @endforeach
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <label for="">No PO</label>
+            <input type="text" class="form-control" placeholder="Nama">
+          </div>
+          <div class="col">
+            <label for="">Status</label>
+    
+            <select name="status" id="status" class="form-control">
+              <option value="">Pilih Status</option>
+              <option value="PENDING">PENDING</option>
+              <option value="POTONG">POTONG</option>
+              <option value="KIRIM">KIRIM</option>
+              <option value="SELESAI">SELESAI</option>
+              <option value="LUNAS">LUNAS</option>
+            </select>
+          </div>
+          <div class="col">
+            <label for="">Tanggal</label>
+           <input type="date" name="tanggal" class="form-control" id="tanggal">
+          </div>
+        </div>
+        <div class="row">
+          {{-- Button Simpan --}}
+          <div class="col">
+            <button type="submit" class="btn btn-primary btn-block">
+              <i class="fa fa-search"></i> Cari
+            </button>
+        </div>
+      </form>
+    </div>
+  </div>
   <div class="card">
     <div class="card-body">
       <a href="{{ route('orders.create') }}" class="btn btn-primary"><i class="fa fa-plus me-2"></i>Orders</a>

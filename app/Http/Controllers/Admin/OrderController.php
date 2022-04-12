@@ -18,78 +18,74 @@ class OrderController extends Controller
     {
 
         if (request()->ajax()) {
-            if(auth()->user()->roles == "ADMIN"){
-                $orders = Order::with('user','product')
-                                ->whereIn('status',['PENDING','POTONG','KIRIM','SELESAI','LUNAS'])
-                                ->latest();
-                }else{
+            if (auth()->user()->roles == "ADMIN") {
+                $orders = Order::with('user', 'product')
+                    ->whereIn('status', ['PENDING', 'POTONG', 'KIRIM', 'SELESAI', 'LUNAS'])
+                    ->latest();
+            } else {
                 $orders = Order::where('user_id', auth()->user()->id)
-                                ->whereIn('status',['PENDING','POTONG','KIRIM','SELESAI','LUNAS'])
+                    ->whereIn('status', ['PENDING', 'POTONG', 'KIRIM', 'SELESAI', 'LUNAS'])
 
-                                ->with('user','product')
-                                ->latest();
+                    ->with('user', 'product')
+                    ->latest();
+            }
 
-                }
-            
             return Datatables::of($orders->get())
                 ->addIndexColumn()
                 ->addColumn('harga', function ($data) {
                     return moneyFormat($data->harga);
-                
-                })  
+                })
                 ->addColumn('total_harga', function ($data) {
                     return moneyFormat($data->total_harga);
-                
                 })
                 ->addColumn('status', function ($data) {
-                    if($data->status == "PENDING"){
-                        $status = '<button class="btn btn-warning btn-sm">'.$data->status.'</button>';
-                    }elseif($data->status == "POTONG"){
-                        $status = '<button class="btn btn-primary btn-sm">'.$data->status.'</button>';
-                    }elseif($data->status == "BATAL"){
-                        $status = '<button class="btn btn-danger btn-sm">'.$data->status.'</button>';
-                    }elseif($data->status == "KIRIM"){
-                        $status = '<button class="btn btn-success btn-sm">'.$data->status.'</button>';
-                    }elseif($data->status == "SELESAI"){
-                        $status = '<button class="btn btn-info btn-sm">'.$data->status.'</button>';
-                    }else{
-                        $status = '<button class="btn btn-success btn-sm">'.$data->status.'</button>';
+                    if ($data->status == "PENDING") {
+                        $status = '<button class="btn btn-warning btn-sm">' . $data->status . '</button>';
+                    } elseif ($data->status == "POTONG") {
+                        $status = '<button class="btn btn-primary btn-sm">' . $data->status . '</button>';
+                    } elseif ($data->status == "BATAL") {
+                        $status = '<button class="btn btn-danger btn-sm">' . $data->status . '</button>';
+                    } elseif ($data->status == "KIRIM") {
+                        $status = '<button class="btn btn-success btn-sm">' . $data->status . '</button>';
+                    } elseif ($data->status == "SELESAI") {
+                        $status = '<button class="btn btn-info btn-sm">' . $data->status . '</button>';
+                    } else {
+                        $status = '<button class="btn btn-success btn-sm">' . $data->status . '</button>';
                     }
 
                     return $status;
-                
                 })
                 ->addColumn('aksi', function ($data) {
                     $edit = "";
-                    if(Auth::user()->roles == "ADMIN"){
+                    if (Auth::user()->roles == "ADMIN") {
 
-                        $edit = '<a href="' . route('orders.edit',$data->id) . '"  class="btn btn-primary btn-sm me-2"> Edit </a>';
+                        $edit = '<a href="' . route('orders.edit', $data->id) . '"  class="btn btn-primary btn-sm me-2"> Edit </a>';
                     }
-                    if($data->status == "PENDING"){
-                        $aksi = '<a href="javascript:void(0)" onclick="ChangeStatus(this.id)" id="'.$data->id.'" class="btn btn-warning btn-sm"> Potong </a>';
-                    }elseif($data->status == "POTONG"){
-                        $aksi = '<a href="javascript:void(0)" onclick="ChangeStatus(this.id)" id="'.$data->id.'" class="btn btn-success btn-sm"> Kirim </a>';
-                    }elseif($data->status == "KIRIM"){
-                        $aksi = '<a href="javascript:void(0)" onclick="ChangeStatus(this.id)" id="'.$data->id.'" class="btn btn-success btn-sm"> Selesai </a>';
-                    }else{
+                    if ($data->status == "PENDING") {
+                        $aksi = '<a href="javascript:void(0)" onclick="ChangeStatus(this.id)" id="' . $data->id . '" class="btn btn-warning btn-sm"> Potong </a>';
+                    } elseif ($data->status == "POTONG") {
+                        $aksi = '<a href="javascript:void(0)" onclick="ChangeStatus(this.id)" id="' . $data->id . '" class="btn btn-success btn-sm"> Kirim </a>';
+                    } elseif ($data->status == "KIRIM") {
+                        $aksi = '<a href="javascript:void(0)" onclick="ChangeStatus(this.id)" id="' . $data->id . '" class="btn btn-success btn-sm"> Selesai </a>';
+                    } else {
                         $aksi = "";
                     }
 
                     return $edit . $aksi;
-                
                 })
-                ->rawColumns(["harga","aksi","status"])
+                ->rawColumns(["harga", "aksi", "status"])
                 ->make(true);
         }
-        return view('admin.orders.index');
+        $users = User::all();
+        return view('admin.orders.index', compact('users'));
     }
 
     public function create()
     {
-        $users = User::where('roles','USER')->get();
+        $users = User::where('roles', 'USER')->get();
         $products = Product::all();
-        return view('admin.orders.create',compact('users','products'));
-    } 
+        return view('admin.orders.create', compact('users', 'products'));
+    }
 
     public function store(Request $request)
     {
@@ -97,9 +93,9 @@ class OrderController extends Controller
         $user = User::findOrFail($request->user_id ?? Auth::user()->id);
         // Check Stok
         $stock = Product::findOrFail($request->product_id);
-        
+
         $name = Str::slug($user->name);
-        $ref = "PO/".date('Y-m-d')."/".$name."/".$this->TrasactionOrder();
+        $ref = "PO/" . date('Y-m-d') . "/" . $name . "/" . $this->TrasactionOrder();
         // validate order
         $request->validate([
             'product_id' => 'required',
@@ -112,12 +108,12 @@ class OrderController extends Controller
             'tanggal_potong' => 'required',
         ]);
 
-        if($stock->stock <= 1){
-            return back()->withInput()->with('info','Stock Habis Sisa '.$stock->stock);
+        if ($stock->stock <= 1) {
+            return back()->withInput()->with('info', 'Stock Habis Sisa ' . $stock->stock);
         }
 
         DB::beginTransaction();
-        try{
+        try {
 
             // create order
             $order = Order::create([
@@ -138,26 +134,23 @@ class OrderController extends Controller
             ]);
             activity(auth()->user()->name)->log('Menambah Orders  ' . $request->name);
             DB::commit();
-            return redirect()->route('orders.index')->with('success','data berhasil disimpan!');
-        }catch(\Exception $e){
+            return redirect()->route('orders.index')->with('success', 'data berhasil disimpan!');
+        } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->route('orders.index')->with('error','data Gagal disimpan! ' . $e->getMessage());
-
-            
+            return redirect()->route('orders.index')->with('error', 'data Gagal disimpan! ' . $e->getMessage());
         }
-
     }
 
-    
+
 
     public function edit($id)
     {
         $order = Order::findOrFail($id);
-        $users = User::where('roles','USER')->get();
-        return view('admin.orders.edit',compact('order','users'));
+        $users = User::where('roles', 'USER')->get();
+        return view('admin.orders.edit', compact('order', 'users'));
     }
 
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         $order = Order::findOrFail($id);
 
@@ -172,8 +165,8 @@ class OrderController extends Controller
             'tanggal_potong' => 'required',
         ]);
         DB::beginTransaction();
-        try{
-            
+        try {
+
             $order->update([
                 'user_id' => $request->user_id ?? auth()->user()->id,
                 'product_id' => $request->product_id,
@@ -190,39 +183,38 @@ class OrderController extends Controller
                 'note' => $request->note,
                 'status' => $request->status
             ]);
-            activity(auth()->user()->name)->log('Update  Order ' . $order->ref );
+            activity(auth()->user()->name)->log('Update  Order ' . $order->ref);
             DB::commit();
 
-            return redirect()->route('orders.index')->with('success','data berhasil disimpan!!');
-        }catch(\Exception $e){
+            return redirect()->route('orders.index')->with('success', 'data berhasil disimpan!!');
+        } catch (\Exception $e) {
             DB::rollback();
-            return back()->with('error','Data Gagal di simpan!! ' . $e->getMessage() );
+            return back()->with('error', 'Data Gagal di simpan!! ' . $e->getMessage());
         }
-
     }
 
     public function destroy($id)
     {
         $order = Order::with('product')->findOrFail($id);
-        
-        if($order->status == "PENDING"){
-            
+
+        if ($order->status == "PENDING") {
+
             $product = Product::findOrFail($order->product_id)->decrement('stock');
-            
-            activity()->log('Update  Stock ' . $order->product->name .' '. $order->product->type .' '. $order->product->jenis  );
+
+            activity()->log('Update  Stock ' . $order->product->name . ' ' . $order->product->type . ' ' . $order->product->jenis);
         }
 
         $order->update([
             'status' => request()->status
         ]);
 
-        if($order){
+        if ($order) {
             return response()->json([
                 'status' => "success",
                 'message' => "data berhasil diupdate",
                 'data' => $order
             ]);
-        }else{
+        } else {
             return response()->json([
                 'status' => "error",
                 'message' => "data gagal diupdate",
