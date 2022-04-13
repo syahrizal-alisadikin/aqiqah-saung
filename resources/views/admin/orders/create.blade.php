@@ -204,9 +204,15 @@
                       $('#hargaView').val("");
                       $('select[name="product_id"]').empty();
                       $('select[name="product_id"]').append('<option value="">Pilih Produk</option>');
+                       if(response.data.roles == "ADMIN"){
                         $.each(response.data, function (key, value) {
                                 $('select[name="product_id"]').append('<option value="' +  value.id + '">' + value.name +' '+value.type+ ' '+ value.jenis+ '</option>');
                         });
+                       }else{
+                        $.each(response.data, function (key, value) {
+                                $('select[name="product_id"]').append('<option value="' +  value.product_id + '">' + value.product.name +' '+value.product.type+ ' '+ value.product.jenis+ '</option>');
+                        });
+                       }
                      
                   
                         },

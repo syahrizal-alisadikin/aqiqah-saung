@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\HargaRekanan;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\Order;
@@ -24,9 +25,7 @@ class ApiController extends Controller
 
             ]);
         } else {
-            $product = Product::whereHas('rekanan', function ($q) use ($user) {
-                $q->where('user_id', $user->id);
-            })->with('rekanan')->get();
+            $product = HargaRekanan::where('user_id', $id)->with('product')->get();
             return response()->json([
                 'status' => 'success',
                 'message' => 'rekanan',
