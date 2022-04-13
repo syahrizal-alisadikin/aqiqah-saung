@@ -233,9 +233,9 @@
                       if(response.user.roles == "USER"){
                         $('#hargaView').val("Rp "+ new Intl.NumberFormat('id-ID', {
                                   maximumSignificantDigits: 5
-                              }).format(response.data.rekanan != null ? response.data.rekanan.harga : 0))
+                              }).format(response.data != null ? response.data.harga : 0))
                          
-                         $("#hargaInput").val(response.data.rekanan != null ? response.data.rekanan.harga : 0)
+                         $("#hargaInput").val(response.data != null ? response.data.harga : 0)
 
                       }else{
                         $('#hargaView').val("Rp "+ new Intl.NumberFormat('id-ID', {

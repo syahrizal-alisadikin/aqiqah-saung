@@ -39,14 +39,26 @@ class ApiController extends Controller
     public function product($id)
     {
         $user = User::find(request()->user_id);
-        $product = Product::with('rekanan')->find($id);
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Product berhasil diambil',
-            'data' => $product,
-            'user' => $user
+        if ($user->roles == 'ADMIN') {
+            $product = Product::with('rekanan')->findOrFail($id);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Product Berhasil diambil',
+                'data' => $product,
+                'user' => $user
 
-        ]);
+            ]);
+        } else {
+            $product = HargaRekanan::where('user_id', request()->user_id)->where('product_id', $id)->with('product')->get();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Product Berhasil diambil',
+                'data' => $product,
+                'user' => $user
+
+
+            ]);
+        }
     }
 
     public function order($id)
