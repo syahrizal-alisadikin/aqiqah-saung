@@ -204,7 +204,7 @@
                       $('#hargaView').val("");
                       $('select[name="product_id"]').empty();
                       $('select[name="product_id"]').append('<option value="">Pilih Produk</option>');
-                       if(response.data.roles == "ADMIN"){
+                       if(response.user.roles == "ADMIN"){
                         $.each(response.data, function (key, value) {
                                 $('select[name="product_id"]').append('<option value="' +  value.id + '">' + value.name +' '+value.type+ ' '+ value.jenis+ '</option>');
                         });
