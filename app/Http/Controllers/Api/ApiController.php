@@ -49,7 +49,7 @@ class ApiController extends Controller
 
             ]);
         } else {
-            $product = HargaRekanan::where('user_id', request()->user_id)->where('product_id', $id)->with('product')->get();
+            $product = HargaRekanan::where('user_id', request()->user_id)->where('product_id', $id)->with('product')->first();
             return response()->json([
                 'status' => 'success',
                 'message' => 'Product Berhasil diambil',
