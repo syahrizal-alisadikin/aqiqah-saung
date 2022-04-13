@@ -11,16 +11,25 @@
     }
 </style> --}}
 <body>
-	
-	<center>
+<div class="row">
+    <div class="container">
         <img src="{{ public_path('storage/profile/'. $order->user->foto) }}" style="height: 100px; width:100px"  alt="">
-		<h3>{{ $order->name }}</h3>
+
+    </div>
+    <div class="container text-center p-4">
+
+        <h3>{{ $order->name }}</h3>
         <h4>{{ $order->jk == 0 ? "BINTI" : "BIN" }}</h4>
         <h3>{{ $order->nama_ayah }}</h3>
-        
-		
-	</center>
+    </div>
+</div>
+	
 
-
+<div class="row">
+    <div class="container">
+        <h5>{{ $order->quantity ." ". $order->product->type ." ". $order->product->jenis }} </h5>
+        <h5>{{ $order->note }}</h5>
+    </div>
+</div>
 </body>
 </html>
