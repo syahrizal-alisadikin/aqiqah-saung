@@ -14,24 +14,26 @@ class ApiController extends Controller
     public function rekanan($id)
     {
         $user = User::find($id);
-        if($user->roles == 'ADMIN'){
+        if ($user->roles == 'ADMIN') {
             $product = Product::with('rekanan')->get();
             return response()->json([
                 'status' => 'success',
                 'message' => 'admin',
                 'data' => $product,
                 'user' => $user
-                                                                                   
+
             ]);
-        }else{
-            $product = Product::whereHas('rekanan',function($q) use ($id){
-                $q->where('user_id',$id);
+        } else {
+            $product = Product::whereHas('rekanan', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
             })->with('rekanan')->get();
             return response()->json([
                 'status' => 'success',
                 'message' => 'rekanan',
                 'data' => $product,
-    
+                'user' => $user
+
+
             ]);
         }
     }
