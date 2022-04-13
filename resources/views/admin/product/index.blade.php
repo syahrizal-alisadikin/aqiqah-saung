@@ -8,7 +8,57 @@
   </div>
 </div>
 
-
+<div class="row">
+<div class="contaner text-center">
+  <h5>{{ $products }} Ekor</h5>
+</div>
+ @foreach ($productType as $item)
+ @php
+     $products = \App\Models\Product::whereNotNull('stock')
+                    ->where('jenis',$item->jenis)
+                    ->groupBy('jenis')
+                    ->groupBy('type')
+                    ->selectRaw('sum(stock) as sum, type ,jenis')
+                    ->get();
+ @endphp  
+  <div class="col-xl-6 col-sm-6 mb-xl-0 mb-4">
+    <div class="card">
+      <div class="card-body p-3">
+        <div class="row">
+          <div class="col-12">
+            <div class="numbers">
+              <p class="text-sm mb-0 text-capitalize text-center font-weight-bold">{{ $item->jenis }}</p>
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0"   style="width:100%; !important">
+                  <thead>
+                    <tr>
+                     @foreach ($products as $product)
+                    <th class=" text-uppercase text-secondary text-center opacity-7">{{ $product->type }}</th>
+                 
+                    @endforeach
+                  </tr> 
+                  </thead>
+                  <tbody>
+                    <tr>
+                      @foreach ($products as $pro)
+                      <td class="text-center">{{ $pro->sum }}</td>
+                          
+                      @endforeach
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+    </div>
+  </div>
+ @endforeach
+  
+ 
+</div>
 <div class="row">
   <div class="card">
     <div class="card-body">
@@ -36,7 +86,45 @@
 </div>
 
 
- 
+   <!-- Modal -->
+   <div class="modal fade" id="showModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"> </h5>
+          <button type="button" class="close" onclick="exitModal()" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="{{ route('stock.store') }}" method="post">
+        <div class="modal-body">
+              @csrf
+              <div class="form-group">
+                <label for="name">Pilih Status</label>
+                <select name="status" class="form-control" required id="">
+                    <option value="">Pilih</option>
+                    <option value="Masuk">Masuk</option>
+                    <option value="Sakit">Sakit</option>
+                    <option value="Mati">Mati</option>
+                </select>
+            </div>
+              <div class="form-group">
+                  <label for="name">Quantity</label>
+                  <input  type="number" required name="quantity" placeholder="Masukan Quantity" id="name" class="form-control">
+                  <input  type="hidden"  name="product_id" id="product_id">
+              </div>
+           
+            
+           
+              <div class="form-group">
+                  <button type="submit" class="btn btn-primary">Save</button>
+                  <button type="button" class="btn btn-secondary"onclick="exitModal()">Close</button>
+              </div>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
 @endsection
 @push('addon-script')
 <script>
@@ -101,6 +189,27 @@
           ]
     })
    
-  </script>
- 
+</script>
+ <script>
+   function ShowPlush(id)
+   {
+     if (id) {
+       jQuery.ajax({
+         url: '/api/productStock/'+id,
+         type: "GET", 
+         dataType: "json",
+         success: function (response) {
+                      $("#showModal").modal('show');
+                      $("#exampleModalLabel").text(`${response.data.name} ${response.data.type} ${response.data.jenis}`);
+                      $("#product_id").val(response.data.id)
+                  
+                        },
+
+                    });
+                }
+   }
+   function exitModal(){
+  $("#showModal").modal('hide');
+}
+ </script>
 @endpush

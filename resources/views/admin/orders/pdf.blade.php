@@ -17,18 +17,18 @@
 
     </div>
     <div class="container text-center p-4">
-
-        <h3>{{ $order->name }}</h3>
-        <h4>{{ $order->jk == 0 ? "BINTI" : "BIN" }}</h4>
-        <h3>{{ $order->nama_ayah }}</h3>
+        <h3>AQIQAH :</h3>
+        <h1>{{ $order->name }}</h1>
+        <h5>{{ $order->jk == 0 ? "BINTI" : "BIN" }}</h5>
+        <h1>{{ $order->nama_ayah }}</h1>
     </div>
 </div>
 	
 
-<div class="row">
-    <div class="container">
-        <h5>{{ $order->quantity ." ". $order->product->type ." ". $order->product->jenis }} </h5>
-        <h5>{{ $order->note }}</h5>
+<div class="row" style="margin-top:100px">
+    <div class="container" style="line-height: 0.5">
+        <p>{{ $order->quantity ." ". $order->product->type ." ". $order->product->jenis }} </p>
+        <p>{{ $order->note }}</p>
     </div>
 </div>
 </body>

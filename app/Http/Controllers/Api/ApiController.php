@@ -63,10 +63,22 @@ class ApiController extends Controller
 
     public function order($id)
     {
-        $product = Order::find($id);
+        $orders = Order::find($id);
         return response()->json([
             'status' => 'success',
             'message' => 'Order berhasil diambil',
+            'data' => $orders,
+
+        ]);
+    }
+
+    public function productStock($id)
+    {
+        $product = Product::findOrFail($id);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'produk berhasil diambil',
             'data' => $product,
 
         ]);

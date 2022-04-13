@@ -35,6 +35,7 @@ route::prefix('dashboard')
         Route::resource('orders', OrderController::class,['except' => ['show']]);
         Route::get('orders/pdf/{id}', [OrderController::class, 'pdf'])->name('orders.pdf');
         Route::resource('products', ProductController::class);
+        Route::post('stock-product',[ProductController::class,'StockProduct'])->name('stock.store');
         Route::post('products-rekanan/{id}', [ProductController::class,'harga'])->name('harga-rekanan');
         Route::resource('users', UserController::class);
         Route::resource('profile', ProfileController::class,['except' => ['show']]);
