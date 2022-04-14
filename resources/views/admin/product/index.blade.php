@@ -8,10 +8,21 @@
   </div>
 </div>
 
-<div class="row">
-<div class="contaner text-center">
-  <h5>{{ $products }} Ekor</h5>
+<div class="row justify-content-center">
+    <div class="col-md-2 text-center">
+      <h5>Sehat {{ $products }} Ekor</h5>
+    </div>
+    <div class="col-md-2 text-center">
+  
+      <h5>Sakit {{ $productSakit }} Ekor</h5>
+    </div>
+    <div class="col-md-2 text-center">
+  
+      <h5>Mati {{ $productMati }} Ekor</h5>
+    </div>
 </div>
+<div class="row">
+
  @foreach ($productType as $item)
  @php
      $products = \App\Models\Product::whereNotNull('stock')
