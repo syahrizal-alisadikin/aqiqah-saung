@@ -31,14 +31,17 @@ route::prefix('dashboard')
     ->middleware('auth')
     ->group(function () {
         Route::get('/admin', [DashboardController::class, 'index'])->name('dashboard');
-        Route::resource('keuangan', KeuanganController::class,['except' => ['show']]);
-        Route::resource('orders', OrderController::class,['except' => ['show']]);
+        Route::resource('keuangan', KeuanganController::class, ['except' => ['show']]);
+        Route::resource('orders', OrderController::class, ['except' => ['show']]);
         Route::get('orders/pdf/{id}', [OrderController::class, 'pdf'])->name('orders.pdf');
+        Route::post('orders/excel/', [OrderController::class, 'OrderExcel'])->name('orders-excel');
+        Route::post('orders/pdf/', [OrderController::class, 'OrderPdf'])->name('orders-pdf');
         Route::resource('products', ProductController::class);
-        Route::post('stock-product',[ProductController::class,'StockProduct'])->name('stock.store');
-        Route::post('products-rekanan/{id}', [ProductController::class,'harga'])->name('harga-rekanan');
+        Route::get('products-stock/{id}', [ProductController::class, 'stock'])->name('product-stock');
+        Route::post('stock-product', [ProductController::class, 'StockProduct'])->name('stock.store');
+        Route::post('products-rekanan/{id}', [ProductController::class, 'harga'])->name('harga-rekanan');
         Route::resource('users', UserController::class);
-        Route::resource('profile', ProfileController::class,['except' => ['show']]);
+        Route::resource('profile', ProfileController::class, ['except' => ['show']]);
         Route::get('/keuangan/pengeluaran', [KeuanganController::class, 'pengeluaran'])->name('pengeluaran.index');
         Route::post('/keuangan/pengeluaran', [KeuanganController::class, 'pengeluaranStore'])->name('keuangan.pengeluaran');
         Route::get('/forbodden', [HomeController::class, 'error'])->name('forbodden');

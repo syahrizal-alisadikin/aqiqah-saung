@@ -21,7 +21,7 @@
       <h5>Mati {{ $productMati }} Ekor</h5>
     </div>
 </div>
-<div class="row">
+<div class="row my-4">
 
  @foreach ($productType as $item)
  @php
@@ -140,8 +140,8 @@
 @push('addon-script')
 <script>
     var orders = $('#products').DataTable({
-       processing: true,
-  
+        processing: true,
+        responsive: true,
         serverSide:true,
         ordering:true,
         ajax:{

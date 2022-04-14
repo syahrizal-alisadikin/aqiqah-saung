@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\OrdersExport;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Product;
@@ -12,6 +13,7 @@ use PDF;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OrderController extends Controller
 {
@@ -278,11 +280,146 @@ class OrderController extends Controller
         }
     }
 
+    public function OrderExcel(Request $request)
+    {
+        if (auth()->user()->roles == "ADMIN") {
+            $orders = Order::with('user', 'product')
+                ->whereIn('status', ['PENDING', 'POTONG', 'KIRIM', 'SELESAI', 'LUNAS'])
+                ->when(request('name'), function ($query) {
+                    return $query->where('name', 'like', '%' . request('name') . '%');
+                })
+                ->when(request('nama_ayah'), function ($query) {
+                    return $query->where('nama_ayah', 'like', '%' . request('nama_ayah') . '%');
+                })
+                ->when(request('ref'), function ($query) {
+                    return $query->where('ref', 'like', '%' . request('ref') . '%');
+                })
+                ->when(request('user_id'), function ($query) {
+                    return $query->where('user_id', request('user_id'));
+                })
+                ->when(request('created_at'), function ($query) {
+                    $time_created   = request('created_at');
+                    $arr_date       = explode('-', $time_created);
+                    $date_from_trim = trim($arr_date[0]);
+                    $date_to_trim   = trim($arr_date[1]);
+                    $date_from      = date('Y-m-d', strtotime($date_from_trim));
+                    $date_to        = date('Y-m-d', strtotime($date_to_trim));
+
+                    return $query->whereBetween('created_at', ['' . $date_from . '', '' . $date_to . '']);
+                })
+                ->when(request('status'), function ($query) {
+                    return $query->where('status', request('status'));
+                })
+                ->latest()
+                ->get();
+        } else {
+            $orders = Order::where('user_id', auth()->user()->id)
+                ->whereIn('status', ['PENDING', 'POTONG', 'KIRIM', 'SELESAI', 'LUNAS'])
+                ->when(request('name'), function ($query) {
+                    return $query->where('name', 'like', '%' . request('name') . '%');
+                })
+                ->when(request('nama_ayah'), function ($query) {
+                    return $query->where('nama_ayah', 'like', '%' . request('nama_ayah') . '%');
+                })
+                ->when(request('ref'), function ($query) {
+                    return $query->where('ref', 'like', '%' . request('ref') . '%');
+                })
+                ->when(request('user_id'), function ($query) {
+                    return $query->where('user_id', request('user_id'));
+                })
+                ->when(request('created_at'), function ($query) {
+                    $time_created   = request('created_at');
+                    $arr_date       = explode('-', $time_created);
+                    $date_from_trim = trim($arr_date[0]);
+                    $date_to_trim   = trim($arr_date[1]);
+                    $date_from      = date('Y-m-d', strtotime($date_from_trim));
+                    $date_to        = date('Y-m-d', strtotime($date_to_trim));
+
+                    return $query->whereBetween('created_at', ['' . $date_from . '', '' . $date_to . '']);
+                })
+                ->when(request('status'), function ($query) {
+                    return $query->where('status', request('status'));
+                })
+                ->with('user', 'product')
+                ->latest()
+                ->get();
+        }
+        return Excel::download(new OrdersExport($orders), 'order.xlsx');
+    }
+
+    public function OrderPdf(Request $request)
+    {
+        if (auth()->user()->roles == "ADMIN") {
+            $orders = Order::with('user', 'product')
+                ->whereIn('status', ['PENDING', 'POTONG', 'KIRIM', 'SELESAI', 'LUNAS'])
+                ->when(request('name'), function ($query) {
+                    return $query->where('name', 'like', '%' . request('name') . '%');
+                })
+                ->when(request('nama_ayah'), function ($query) {
+                    return $query->where('nama_ayah', 'like', '%' . request('nama_ayah') . '%');
+                })
+                ->when(request('ref'), function ($query) {
+                    return $query->where('ref', 'like', '%' . request('ref') . '%');
+                })
+                ->when(request('user_id'), function ($query) {
+                    return $query->where('user_id', request('user_id'));
+                })
+                ->when(request('created_at'), function ($query) {
+                    $time_created   = request('created_at');
+                    $arr_date       = explode('-', $time_created);
+                    $date_from_trim = trim($arr_date[0]);
+                    $date_to_trim   = trim($arr_date[1]);
+                    $date_from      = date('Y-m-d', strtotime($date_from_trim));
+                    $date_to        = date('Y-m-d', strtotime($date_to_trim));
+
+                    return $query->whereBetween('created_at', ['' . $date_from . '', '' . $date_to . '']);
+                })
+                ->when(request('status'), function ($query) {
+                    return $query->where('status', request('status'));
+                })
+                ->latest()
+                ->get();
+        } else {
+            $orders = Order::where('user_id', auth()->user()->id)
+                ->whereIn('status', ['PENDING', 'POTONG', 'KIRIM', 'SELESAI', 'LUNAS'])
+                ->when(request('name'), function ($query) {
+                    return $query->where('name', 'like', '%' . request('name') . '%');
+                })
+                ->when(request('nama_ayah'), function ($query) {
+                    return $query->where('nama_ayah', 'like', '%' . request('nama_ayah') . '%');
+                })
+                ->when(request('ref'), function ($query) {
+                    return $query->where('ref', 'like', '%' . request('ref') . '%');
+                })
+                ->when(request('user_id'), function ($query) {
+                    return $query->where('user_id', request('user_id'));
+                })
+                ->when(request('created_at'), function ($query) {
+                    $time_created   = request('created_at');
+                    $arr_date       = explode('-', $time_created);
+                    $date_from_trim = trim($arr_date[0]);
+                    $date_to_trim   = trim($arr_date[1]);
+                    $date_from      = date('Y-m-d', strtotime($date_from_trim));
+                    $date_to        = date('Y-m-d', strtotime($date_to_trim));
+
+                    return $query->whereBetween('created_at', ['' . $date_from . '', '' . $date_to . '']);
+                })
+                ->when(request('status'), function ($query) {
+                    return $query->where('status', request('status'));
+                })
+                ->with('user', 'product')
+                ->latest()
+                ->get();
+        }
+        $pdf = PDF::loadView('admin.orders.order-pdf', compact('orders'));
+        return $pdf->stream('orders.pdf');
+    }
+
     public function pdf($id)
     {
         $order = Order::with('user')->findOrFail($id);
 
-        $pdf = PDF::loadView('admin.orders.pdf', compact('order'));
+        $pdf = PDF::loadView('admin.orders.print-pdf', compact('order'));
         return $pdf->stream('orders.pdf');
     }
 

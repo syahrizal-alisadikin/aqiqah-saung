@@ -35,8 +35,9 @@ class ProductController extends Controller
                 ->addColumn('aksi', function ($data) {
                     $edit = '<a href="' . route('products.edit', $data->id) . '"  class="btn btn-primary btn-sm"> Edit </a>';
                     $harga = '<a href="' . route('products.show', $data->id) . '"  class="btn btn-danger btn-sm"> Harga Rekanan </a>';
-                    $plush = '<a href="javascript:void(0)" onclick="ShowPlush(this.id)" id="' . $data->id . '"  class="btn btn-success btn-sm"> <i class="fa fa-plus fa-lg"></i> </a>';
-                    return $edit . ' ' . $harga . ' ' . $plush;
+                    $plush = '<a href="javascript:void(0)" onclick="ShowPlush(this.id)" id="' . $data->id . '"  class="btn btn-success btn-sm me-1"> <i class="fa fa-plus fa-lg"></i> </a>';
+                    $info = '<a href="' . route('product-stock', $data->id) . '"   class="btn btn-info btn-sm"> <i class="fa fa-pencil fa-lg"></i> </a>';
+                    return $edit . ' ' . $harga . ' ' . $plush . '' . $info;
                 })
                 ->rawColumns(["sell_price", "buy_price", 'aksi'])
                 ->make(true);
@@ -115,6 +116,24 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $users = User::where('roles', 'USER')->get();
         return view('admin.product.show', compact('product', 'users'));
+    }
+
+    public function stock($id)
+    {
+        if (request()->ajax()) {
+            $stock = Stock::where('product_id', $id)->with('product');
+            return Datatables::of($stock->get())
+                ->addIndexColumn()
+                ->addColumn('tanggal', function ($data) {
+                    return TanggalID($data->tanggal);
+                })
+
+                ->rawColumns(["tanggal"])
+                ->make(true);
+        }
+        $product = Product::findOrFail($id);
+
+        return view('admin.product.stock', compact('product'));
     }
 
     public function update(Request $request, $id)

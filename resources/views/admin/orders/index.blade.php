@@ -12,7 +12,8 @@
 <div class="row">
   <div class="card mb-4">
     <div class="card-body">
-      <form action="#">
+      <form action="#" method="post" id="form-order">
+        @csrf
         <div class="row">
           <div class="col">
             <label for="">Nama</label>
@@ -55,9 +56,7 @@
             <label for="">Tanggal</label>
             <div class="input-group">
               <input type="text" class="form-control" id="created_at" name="created_at" value="" />
-              <span class="input-group-addon" style="margin-left: ; margin-top:5px">
-                <i class="fa fa-calendar fa-lg" aria-hidden="true"></i> 
-              </span>
+             
           </div>
            </div>
 
@@ -73,10 +72,10 @@
             <button type="button" class="btn btn-primary btn-block" id="search">
               <i class="fa fa-search"></i> Cari
             </button>
-            <button class="btn btn-success btn-block">
+            <button type="button" class="btn btn-success btn-block" id="downloadPDF">
               <i class="fa fa-download me-1"></i>Download PDF
             </button>
-            <button class="btn btn-warning btn block">
+            <button type="button" class="btn btn-warning btn block" id="downloadEXCEL">
               <i class="fa fa-download me-1"></i>Download EXCEL
             </button>
 
@@ -199,6 +198,21 @@
         $('#orders').DataTable().draw(true);
     });
 
+    // Download PDF
+    $("#downloadPDF").on('click',function (e) {
+      $('#form-order').attr('action', '{{route('orders-pdf')}}');
+      document.getElementById('form-order').submit();
+
+    });
+
+    // Download EXCEL
+    $("#downloadEXCEL").on('click',function (e) {
+      $('#form-order').attr('action', '{{route('orders-excel')}}');
+
+      document.getElementById('form-order').submit();
+
+    });
+
    
   </script>
 
@@ -208,7 +222,11 @@
 
       // Date Picker
       $("#created_at").daterangepicker({
-        // showDropdowns: true,
+        showDropdowns: true,
+        // autoUpdateInput: false,
+        // locale: {
+        //     cancelLabel: 'Clear'
+        // }
        
       });
 
