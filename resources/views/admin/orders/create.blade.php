@@ -41,12 +41,14 @@
         @enderror
       </div>
        @endif
+       {{-- Partner input Hidden --}}
+       @if (Auth::user()->roles == "USER")
+       <input type="hidden" name="partner" value="{{ Auth::user()->id }}" id="partner">
+           
+       @endif
        <div class="form-group">
+        
         <label for="name">Produk</label>
-        @if (Auth::user()->roles == "USER")
-        <input type="hidden" name="rekanan" value="{{ Auth::user()->id }}" id="rekanan">
-            
-        @endif
         <select name="product_id" required class="form-control" id="product">
           <option value="">Pilih Produk</option>
           {{-- @forelse ($products as $item)
@@ -193,7 +195,7 @@
   $(document).ready(function() {
     // Select2
     $('#rekanan ,#product').select2();
-    var rekan = $('#rekanan').val();
+    var rekan = $('#partner').val();
     // Product Rekanan
     if (rekan) {
                 jQuery.ajax({
