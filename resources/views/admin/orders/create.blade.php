@@ -199,7 +199,7 @@
     // Product Rekanan
     if (rekan) {
                 jQuery.ajax({
-                     url: '/api/rekanan/'+id,
+                     url: '/api/rekanan/'+rekan,
                     type: "GET",
                     dataType: "json",
                     success: function (response) {
