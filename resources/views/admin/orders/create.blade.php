@@ -25,7 +25,7 @@
        @if (Auth::user()->roles == "ADMIN")
        <div class="form-group">
         <label for="name">Rekanan</label>
-        <select name="user_id" class="form-control" id="rekanan">
+        <select name="user_id" class="form-control" id="user_id">
           <option value="">Pilih Rekanan</option>
           <option value="{{ auth()->user()->id }}">{{ auth()->user()->name }}</option>
         @forelse ($users as $item)
@@ -43,6 +43,10 @@
        @endif
        <div class="form-group">
         <label for="name">Produk</label>
+        @if (Auth::user()->roles == "USER")
+        <input type="hidden" name="rekanan" value="{{ Auth::user()->id }}" id="rekanan">
+            
+        @endif
         <select name="product_id" required class="form-control" id="product">
           <option value="">Pilih Produk</option>
           {{-- @forelse ($products as $item)
@@ -187,13 +191,40 @@
 @push('addon-script')
 <script>
   $(document).ready(function() {
+    // Select2
     $('#rekanan ,#product').select2();
+    var rekan = $('#rekanan').val();
+    // Product Rekanan
+    if (rekan) {
+                jQuery.ajax({
+                     url: '/api/rekanan/'+id,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (response) {
+                      $('#hargaView').val("");
+                      $('select[name="product_id"]').empty();
+                      $('select[name="product_id"]').append('<option value="">Pilih Produk</option>');
+                       if(response.user.roles == "ADMIN"){
+                        $.each(response.data, function (key, value) {
+                                $('select[name="product_id"]').append('<option value="' +  value.id + '">' + value.name +' '+value.type+ ' '+ value.jenis+ '</option>');
+                        });
+                       }else{
+                        $.each(response.data, function (key, value) {
+                                $('select[name="product_id"]').append('<option value="' +  value.product_id + '">' + value.product.name +' '+value.product.type+ ' '+ value.product.jenis+ '</option>');
+                        });
+                       }
+                     
+                  
+                        },
+
+                    });
+                }
 });
 </script>
 
     <script>
       $(document).ready(function(){
-        $("#rekanan").on("change",function(){
+        $("#user_id").on("change",function(){
                 const id =  $(this).val();
                 if (id) {
                 jQuery.ajax({
@@ -222,7 +253,7 @@
             })
         $("#product").on("change",function(){
                 const id =  $(this).val()
-                const rekanan = $('#rekanan').val();
+                const rekanan = $('#user_id').val();
                 if (id) {
                 jQuery.ajax({
                      url: '/api/product/'+id,
