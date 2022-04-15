@@ -82,7 +82,7 @@
           <input type="number" class="form-control" min="0" name="stock_mati" value="0" placeholder="Masukan Stok mati">
         </div>
         <div class="form-group">
-          <label for="image">Total Stok</label>
+          <label for="image">Stok</label>
           <input type="number" required min="0" class="form-control @error('stock') is-invalid @enderror" name="stock" value="0" placeholder=" Masukan Stok Total">
           @error('stock')
           <span class="invalid-feedback" role="alert">

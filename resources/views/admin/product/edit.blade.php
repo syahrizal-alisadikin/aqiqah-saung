@@ -83,7 +83,7 @@
           <input type="number" class="form-control" min="0" name="stock_mati" value="{{ old('stock_mati',$product->stock_mati) }}" placeholder="Masukan Stok mati">
         </div>
         <div class="form-group">
-          <label for="image">Total Stok</label>
+          <label for="image">Stock</label>
           <input type="number" required min="0" class="form-control @error('stock') is-invalid @enderror" name="stock" value="{{ old('stock',$product->stock) }}" placeholder=" Masukan Stok Total">
           @error('stock')
           <span class="invalid-feedback" role="alert">
