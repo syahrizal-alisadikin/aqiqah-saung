@@ -12,13 +12,13 @@ class DashboardController extends Controller
     public function index()
     {
         if(Auth::user()->roles == "ADMIN"){
-            $quantity =10;
-            $totalMonth = Order::where('status' != "PENDING")->whereMonth('created_at',date('m'))->sum('total_harga');
-            $totalYears = Order::where('status' != "PENDING")->whereYear('created_at',date('Y'))->sum('total_harga');
+            $quantity = Order::where('status', "!=", "PENDING")->sum('quantity');
+            $totalMonth = Order::where('status', "!=", "PENDING")->whereMonth('created_at',date('m'))->sum('total_harga');
+            $totalYears = Order::where('status', "!=", "PENDING")->whereYear('created_at',date('Y'))->sum('total_harga');
         }else{
             $quantity = Order::where('user_id',Auth::user()->id)->sum('quantity');
-            $totalMonth = Order::where('user_id',Auth::user()->id)->where('status' != "PENDING")->whereMonth('created_at',date('m'))->sum('total_harga');
-            $totalYears = Order::where('user_id',Auth::user()->id)->where('status' != "PENDING")->whereYear('created_at',date('Y'))->sum('total_harga');
+            $totalMonth = Order::where('user_id',Auth::user()->id)->where('status', "!=", "PENDING")->whereMonth('created_at',date('m'))->sum('total_harga');
+            $totalYears = Order::where('user_id',Auth::user()->id)->where('status', "!=", "PENDING")->whereYear('created_at',date('Y'))->sum('total_harga');
 
         }
         return view('admin.dashboard',compact('quantity','totalMonth','totalYears'));
