@@ -37,6 +37,6 @@ if (! function_exists('TanggalID')) {
     function TanggalID($tanggal) {
         $value = Carbon\Carbon::parse($tanggal);
         $parse = $value->locale('id');
-        return $parse->translatedFormat('l, d F Y');
+        return $parse->translatedFormat('d F Y');
     }
 }

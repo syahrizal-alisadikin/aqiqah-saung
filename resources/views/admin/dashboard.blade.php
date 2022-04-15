@@ -74,5 +74,18 @@
    
   </div>
 
- 
+  <div class="row">
+    <div class="col-xl-12 col-sm-12 mb-xl-0 mb-4">
+      <div class="card">
+        <div class="card-body p-3">
+          {{ $ordersChart->container() }}
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection
+@push('addon-script')
+    <script src="{{ LarapexChart::cdn() }}"></script>
+    {{ $ordersChart->script() }}
+    
+@endpush
