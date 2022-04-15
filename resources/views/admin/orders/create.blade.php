@@ -194,7 +194,7 @@
 <script>
   $(document).ready(function() {
     // Select2
-    $('#rekanan ,#product').select2();
+    $('#user_id ,#product').select2();
     var rekan = $('#partner').val();
     // Product Rekanan
     if (rekan) {
