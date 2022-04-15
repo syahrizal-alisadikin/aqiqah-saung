@@ -255,7 +255,7 @@
             })
         $("#product").on("change",function(){
                 const id =  $(this).val()
-                const rekanan = $('#user_id').val();
+                const rekanan = $('#user_id').val() ?? $('#partner').val();
                 if (id) {
                 jQuery.ajax({
                      url: '/api/product/'+id,
