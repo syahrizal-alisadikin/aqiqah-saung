@@ -12,7 +12,7 @@ class DashboardController extends Controller
     public function index()
     {
         if(Auth::user()->roles == "ADMIN"){
-            $quantity = Order::where('status' != "PENDING")->sum('quantity');
+            $quantity =10;
             $totalMonth = Order::where('status' != "PENDING")->whereMonth('created_at',date('m'))->sum('total_harga');
             $totalYears = Order::where('status' != "PENDING")->whereYear('created_at',date('Y'))->sum('total_harga');
         }else{
