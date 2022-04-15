@@ -45,11 +45,7 @@ class OrderController extends Controller
                         $date_from      = date('Y-m-d', strtotime($date_from_trim));
                         $date_to        = date('Y-m-d', strtotime($date_to_trim));
 
-<<<<<<< HEAD
                         return $query->whereBetween('tanggal_potong', [''.$date_from.'', ''.$date_to.'']);
-=======
-                        return $query->whereBetween('created_at', ['' . $date_from . '', '' . $date_to . '']);
->>>>>>> 3574d96379761b93221d90b630fc3b1b0613a560
                     })
                     ->when(request('status'), function ($query) {
                         return $query->where('status', request('status'));
