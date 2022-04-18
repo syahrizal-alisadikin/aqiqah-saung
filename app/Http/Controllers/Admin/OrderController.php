@@ -45,7 +45,7 @@ class OrderController extends Controller
                         $date_from      = date('Y-m-d', strtotime($date_from_trim));
                         $date_to        = date('Y-m-d', strtotime($date_to_trim));
 
-                        return $query->whereBetween('tanggal_potong', [''.$date_from.'', ''.$date_to.'']);
+                        return $query->whereBetween('tanggal_potong', ['' . $date_from . '', '' . $date_to . '']);
                     })
                     ->when(request('status'), function ($query) {
                         return $query->where('status', request('status'));
@@ -74,7 +74,7 @@ class OrderController extends Controller
                         $date_from      = date('Y-m-d', strtotime($date_from_trim));
                         $date_to        = date('Y-m-d', strtotime($date_to_trim));
 
-                        return $query->whereBetween('created_at', ['' . $date_from . '', '' . $date_to . '']);
+                        return $query->whereBetween('tanggal_potong', ['' . $date_from . '', '' . $date_to . '']);
                     })
                     ->when(request('status'), function ($query) {
                         return $query->where('status', request('status'));
@@ -305,7 +305,7 @@ class OrderController extends Controller
                     $date_from      = date('Y-m-d', strtotime($date_from_trim));
                     $date_to        = date('Y-m-d', strtotime($date_to_trim));
 
-                    return $query->whereBetween('created_at', ['' . $date_from . '', '' . $date_to . '']);
+                    return $query->whereBetween('tanggal_potong', ['' . $date_from . '', '' . $date_to . '']);
                 })
                 ->when(request('status'), function ($query) {
                     return $query->where('status', request('status'));
@@ -335,7 +335,7 @@ class OrderController extends Controller
                     $date_from      = date('Y-m-d', strtotime($date_from_trim));
                     $date_to        = date('Y-m-d', strtotime($date_to_trim));
 
-                    return $query->whereBetween('created_at', ['' . $date_from . '', '' . $date_to . '']);
+                    return $query->whereBetween('tanggal_potong', ['' . $date_from . '', '' . $date_to . '']);
                 })
                 ->when(request('status'), function ($query) {
                     return $query->where('status', request('status'));
@@ -372,7 +372,7 @@ class OrderController extends Controller
                     $date_from      = date('Y-m-d', strtotime($date_from_trim));
                     $date_to        = date('Y-m-d', strtotime($date_to_trim));
 
-                    return $query->whereBetween('created_at', ['' . $date_from . '', '' . $date_to . '']);
+                    return $query->whereBetween('tanggal_potong', ['' . $date_from . '', '' . $date_to . '']);
                 })
                 ->when(request('status'), function ($query) {
                     return $query->where('status', request('status'));
@@ -402,7 +402,7 @@ class OrderController extends Controller
                     $date_from      = date('Y-m-d', strtotime($date_from_trim));
                     $date_to        = date('Y-m-d', strtotime($date_to_trim));
 
-                    return $query->whereBetween('created_at', ['' . $date_from . '', '' . $date_to . '']);
+                    return $query->whereBetween('tanggal_potong', ['' . $date_from . '', '' . $date_to . '']);
                 })
                 ->when(request('status'), function ($query) {
                     return $query->where('status', request('status'));
