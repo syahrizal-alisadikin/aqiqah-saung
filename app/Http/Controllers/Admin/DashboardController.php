@@ -65,7 +65,14 @@ class DashboardController extends Controller
                 ->setTitle('Laporan Order')
                 ->setSubtitle('Periode ' . date('F Y'))
                 ->addData('Orders', [$orderWeeks1, $orderWeeks2, $orderWeeks3, $orderWeeks4, $orderWeeks5])
-                ->setXAxis([$startweeks1->format('Y m d') . ' - ' . $endweeks1->format('Y m d'), $startweeks2 . ' - ' . $endweeks2->format('Y m d'), $startweeks3 . ' - ' . $endweeks3->format('Y m d'), $startweeks4 . ' - ' . $endweeks4->format('Y m d'), $startweeks5->format('Y m d') . ' - ' . $endweeks5->format('Y m d')]);
+                ->setXAxis([
+                    TanggalID($startweeks1) . ' - ' . TanggalID($endweeks1),
+                    TanggalID($startweeks2) . ' - ' . TanggalID($endweeks2),
+                    TanggalID($startweeks3) . ' - ' . TanggalID($endweeks3),
+                    TanggalID($startweeks4) . ' - ' . TanggalID($endweeks4),
+                    TanggalID($startweeks5) . ' - ' . TanggalID($endweeks5),
+
+                ]);
         }
         return view('admin.dashboard', compact('quantity', 'totalMonth', 'totalYears', 'ordersChart'));
     }
