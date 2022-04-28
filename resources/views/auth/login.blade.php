@@ -27,6 +27,13 @@
                 <p class="mb-0">Enter your email and password to sign in</p>
               </div>
               <div class="card-body">
+                @if (session('error'))
+                <div class="alert alert-warning text-white">
+                  {{ session('error') }}
+                </div>
+                    
+                @endif
+                
                 <form role="form" method="POST" action="{{ route('login') }}">
                   @csrf
                   <label>Email</label>
@@ -52,7 +59,10 @@
                     <label class="form-check-label" for="rememberMe">Remember me</label>
                   </div>
                   <div class="text-center">
-                    <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Sign in</button>
+                    <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Login</button> 
+                  <a href="{{ route('google.redirect') }}" class=" btn bg-gradient-success w-100  my-3">Login Google</a>
+
+
                   </div>
                 </form>
               </div>
