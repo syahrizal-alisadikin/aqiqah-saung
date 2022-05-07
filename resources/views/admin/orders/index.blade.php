@@ -223,10 +223,10 @@
       // Date Picker
       $("#created_at").daterangepicker({
         showDropdowns: true,
-        autoUpdateInput: false,
-        locale: {
-            cancelLabel: 'Clear'
-        }
+        autoUpdateInput: true,
+        // locale: {
+        //     cancelLabel: 'Clear'
+        // }
        
       });
 
@@ -272,7 +272,7 @@
                                     showCancelButton: false,
                                     buttons: false,
                                 }).then(function() {
-                                    orders.ajax.reload();
+                                  location.reload();
                                 });
                             }else{
                                 swal({
@@ -284,7 +284,7 @@
                                     showCancelButton: false,
                                     buttons: false,
                                 }).then(function() {
-                                    orders.ajax.reload();
+                                  location.reload();
                                 });
                             }
                         }
