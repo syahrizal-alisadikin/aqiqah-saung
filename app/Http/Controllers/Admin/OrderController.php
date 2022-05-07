@@ -124,7 +124,7 @@ class OrderController extends Controller
                         $aksi = "";
                     }
 
-                    $pdf = '<a href="' . route('orders.pdf', $data->id) . '"  class="btn btn-success btn-sm me-2"> <i class="fa fa-download"></i> PDF </a>';
+                    $pdf = '<a href="' . route('orders.pdf', $data->id) . '"  class="btn btn-success btn-sm mx-2"> <i class="fa fa-download"></i> PDF </a>';
                     return $edit . $aksi . $pdf;
                 })
                 ->rawColumns(["harga", "aksi", "status"])

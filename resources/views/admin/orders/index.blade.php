@@ -223,10 +223,10 @@
       // Date Picker
       $("#created_at").daterangepicker({
         showDropdowns: true,
-        // autoUpdateInput: false,
-        // locale: {
-        //     cancelLabel: 'Clear'
-        // }
+        autoUpdateInput: false,
+        locale: {
+            cancelLabel: 'Clear'
+        }
        
       });
 
