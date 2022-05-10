@@ -36,7 +36,7 @@
               
               <td class="text-center">
                 @forelse ($invoice->products as $item)
-                {{$item->product->name}} <br>
+                {{$item->product->name ." ". $item->product->type ." ". $item->product->jenis}} <br>
                 @empty
                 Tidak ada data
                 @endforelse
@@ -104,7 +104,7 @@
                       <select name="product_id[]" class="form-control" required id="">
                           <option value="">Pilih Product</option>
                           @forelse ($products as $item)
-                              <option value="{{ $item->id }}">{{ $item->name }}</option>
+                              <option value="{{ $item->id }}">{{ $item->name . " " . $item->type . " " . $item->jenis}} </option>
                           @empty
                           <option value="">Tidak ada data</option>
                               
@@ -261,7 +261,7 @@ function exitModal(){
 
                           <option value="">Pilih Product</option>
                           @forelse ($products as $item)
-                              <option value="{{ $item->id }}">{{ $item->name }}</option>
+                              <option value="{{ $item->id }}">{{ $item->name . " " . $item->type . " " . $item->jenis}}</option>
                           @empty
                           <option value="">Tidak ada data</option>
                               
