@@ -116,12 +116,12 @@
                     <div class="col-md-4">
                       <label for="name">Harga</label>
 
-                      <input type="number" name="harga[]" required class="form-control" placeholder="Harga" id="">
+                      <input type="number" name="harga[]" min="0" required class="form-control" placeholder="Harga" id="">
                     </div>
                     <div class="col-md-4">
                       <label for="name">Quantity</label>
 
-                      <input type="number" name="quantity[]" required class="form-control" placeholder="Quantity" id="">
+                      <input type="number" name="quantity[]" min="0" onkeyup="TotalBayar()" required class="form-control" placeholder="Quantity" id="">
                     </div>
                     <div class="container">
                       <button id="addRow" type="button" class="btn btn-info btn-sm ">Tambah</button>
@@ -133,7 +133,7 @@
             <div id="newRow"></div>
             <div class="form-group">
                 <label for="name">Total Pembayaran</label>
-                <input  type="number" required name="total"required placeholder="Masukan Nominal Pemabayaran"  class="form-control">
+                <input  type="number" required name="total"required id="totalBayar" placeholder="Masukan Nominal Pemabayaran"  class="form-control">
             </div>
               <div class="form-group">
                   <button type="submit" class="btn btn-primary">Save</button>
@@ -243,17 +243,6 @@ function exitModal(){
   // add row
   $("#addRow").click(function () {
       var html = '';
-      // html += '<div id="inputFormRow">';
-      // html += '<div class="input-group mb-3">';
-      // html += `<select name="title[]" class="form-control" id="">
-      //                     <option value="">Pilih</option>
-      //                     <option value="">1</option>
-      //                     <option value="">2</option>
-      //                 </select>`;
-      // html += '<div class="input-group-append">';
-      // html += '';
-      // html += '</div>';
-      // html += '</div>';
       html += `<div id="inputFormRow" class="row">
                 <div class="col mb-3">
                   <label for="name">Product</label>
@@ -272,12 +261,12 @@ function exitModal(){
                     <div class="col">
                       <label for="name">Harga</label>
 
-                      <input type="number" name="harga[]" class="form-control" placeholder="harga" id="">
+                      <input type="number" name="harga[]" class="form-control" min="0" placeholder="harga" id="">
                     </div>
                     <div class="col">
                       <label for="name">Quantity</label>
 
-                      <input type="number" name="quantity[]" class="form-control" placeholder="quantity" id="">
+                      <input type="number" name="quantity[]" class="form-control" min="0" onkeyup="TotalBayar()" placeholder="quantity" id="">
                     </div>
                     <div class="container">
                         <button id="removeRow" type="button" class="btn btn-danger">Hapus</button>
@@ -291,5 +280,18 @@ function exitModal(){
   $(document).on('click', '#removeRow', function () {
       $(this).closest('#inputFormRow').remove();
   });
+
+  function TotalBayar(){
+    const harga = $("input[name='harga[]']").map(function(){return $(this).val();}).get();
+    const quantity = $("input[name='quantity[]']").map(function(){return $(this).val();}).get();
+
+    let sumTotal = 0;
+    for(let i = 0 ; i < harga.length; i++){
+      sumTotal += harga[i] * quantity[i];
+    }
+    
+    $("#totalBayar").val(sumTotal)
+
+  }
 </script>
 @endpush
