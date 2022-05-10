@@ -56,7 +56,9 @@ class InvoiceController extends Controller
                 'qty'   => $request->quantity[$data],
                 'harga'      => $request->harga[$data], // price per unit
             ]);
+            $increment = Product::find($product)->increment('stock', $request->quantity[$data]);
         }
+        activity(auth()->user()->name)->log('Menambah Invoice  ' . $invoice->supplier);
 
         return redirect()->route('invoice.index')->with('success', 'Invoice berhasil disimpan!!');
     }
