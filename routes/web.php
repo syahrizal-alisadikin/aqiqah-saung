@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\KeuanganController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
@@ -39,6 +40,7 @@ route::prefix('dashboard')
         Route::post('orders/excel/', [OrderController::class, 'OrderExcel'])->name('orders-excel');
         Route::post('orders/pdf/', [OrderController::class, 'OrderPdf'])->name('orders-pdf');
         Route::resource('products', ProductController::class)->middleware('admin');
+        Route::resource('invoice', InvoiceController::class)->middleware('admin');
         Route::get('products-stock/{id}', [ProductController::class, 'stock'])->name('product-stock')->middleware('admin');
         Route::post('stock-product', [ProductController::class, 'StockProduct'])->name('stock.store')->middleware('admin');
         Route::post('products-rekanan/{id}', [ProductController::class, 'harga'])->name('harga-rekanan')->middleware('admin');
