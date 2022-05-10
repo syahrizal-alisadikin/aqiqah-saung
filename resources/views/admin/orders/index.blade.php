@@ -223,12 +223,12 @@
       // Date Picker
       $("#created_at").daterangepicker({
         showDropdowns: true,
-        autoUpdateInput: true,
+        // autoUpdateInput: true,
         // locale: {
         //     cancelLabel: 'Clear'
         // }
-       
       });
+      $("#created_at").val('');
 
     });
     function ChangeStatus(id)
