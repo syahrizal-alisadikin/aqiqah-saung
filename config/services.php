@@ -33,7 +33,7 @@ return [
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect' => 'https://aqiqah.izaldev.my.id/auth/google/callback',
+        'redirect' => 'https://saungaqiqah.izaldev.my.id/auth/google/callback',
     ],
 
 ];
