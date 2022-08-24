@@ -29,8 +29,8 @@
           <label for="email">Type</label>
           <select name="type" class="form-control" required id="">
             <option value="">Pilih Type</option>
-            <option value="E" {{ old('type',$product->type) == "A+" ? "selected" : "" }}>A+</option>
-             <option value="E" {{ old('type',$product->type) == "A-" ? "selected" : "" }}>A-</option>
+            <option value="A+" {{ old('type',$product->type) == "A+" ? "selected" : "" }}>A+</option>
+             <option value="A-" {{ old('type',$product->type) == "A-" ? "selected" : "" }}>A-</option>
             <option value="A" {{ old('type',$product->type) == "A" ? "selected" : "" }}>A</option>
             <option value="B" {{ old('type',$product->type) == "B" ? "selected" : "" }}>B</option>
             <option value="C" {{ old('type',$product->type) == "C" ? "selected" : "" }}>C</option>
