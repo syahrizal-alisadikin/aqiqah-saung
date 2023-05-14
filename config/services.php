@@ -31,8 +31,8 @@ return [
     ],
 
     'google' => [
-        'client_id' => env('GOOGLE_CLIENT_ID'),
-        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'client_id' => env('GOOGLE_CLIENT_ID', '370250669214-rr3ju2dkokeiuq1tm3ee029qsgamb22t.apps.googleusercontent.com'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET', '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'),
         'redirect' => 'https://saungaqiqah.izaldev.my.id/auth/google/callback',
     ],
 
