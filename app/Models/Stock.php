@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Stock extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
+    use SoftDeletes;
 
-    protected $guarded = ["id"];
-
+    protected $guarded = ['id'];
 
     public function product()
     {

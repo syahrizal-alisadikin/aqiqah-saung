@@ -17,8 +17,8 @@ class CreateKeuangansTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('name');
             $table->integer('nominal');
-            $table->enum('metode',["CASH","TRANSFER"]);
-            $table->enum('type',["PENDAPATAN","PENGELUARAN"]);
+            $table->enum('metode', ['CASH', 'TRANSFER']);
+            $table->enum('type', ['PENDAPATAN', 'PENGELUARAN']);
             $table->date('tanggal');
             $table->string('description')->nullable();
             $table->softDeletes();

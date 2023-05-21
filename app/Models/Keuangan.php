@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Keuangan extends Model
 {
-    use HasFactory, SoftDeletes;
-    protected $guarded = ["id"];
+    use HasFactory;
+    use SoftDeletes;
 
+    protected $guarded = ['id'];
 }

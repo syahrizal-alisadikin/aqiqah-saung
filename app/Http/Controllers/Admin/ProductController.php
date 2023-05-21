@@ -7,8 +7,8 @@ use App\Models\HargaRekanan;
 use App\Models\Product;
 use App\Models\Stock;
 use App\Models\User;
-use Illuminate\Http\Request;
 use DataTables;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
@@ -33,17 +33,16 @@ class ProductController extends Controller
                     return $data->stock_mati == 0 ? '-' : $data->stock_mati;
                 })
                 ->addColumn('aksi', function ($data) {
-                    $edit = '<a href="' . route('products.edit', $data->id) . '"  class="btn btn-primary btn-sm"> Edit </a>';
-                    $harga = '<a href="' . route('products.show', $data->id) . '"  class="btn btn-danger btn-sm"> Harga Rekanan </a>';
-                    $plush = '<a href="javascript:void(0)" onclick="ShowPlush(this.id)" id="' . $data->id . '"  class="btn btn-success btn-sm me-1"> <i class="fa fa-plus fa-lg"></i> </a>';
-                    $info = '<a href="' . route('product-stock', $data->id) . '"   class="btn btn-info btn-sm"> <i class="fa fa-pencil fa-lg"></i> </a>';
-                    return $edit . ' ' . $harga . ' ' . $plush . '' . $info;
+                    $edit = '<a href="'.route('products.edit', $data->id).'"  class="btn btn-primary btn-sm"> Edit </a>';
+                    $harga = '<a href="'.route('products.show', $data->id).'"  class="btn btn-danger btn-sm"> Harga Rekanan </a>';
+                    $plush = '<a href="javascript:void(0)" onclick="ShowPlush(this.id)" id="'.$data->id.'"  class="btn btn-success btn-sm me-1"> <i class="fa fa-plus fa-lg"></i> </a>';
+                    $info = '<a href="'.route('product-stock', $data->id).'"   class="btn btn-info btn-sm"> <i class="fa fa-pencil fa-lg"></i> </a>';
+
+                    return $edit.' '.$harga.' '.$plush.''.$info;
                 })
-                ->rawColumns(["sell_price", "buy_price", 'aksi'])
+                ->rawColumns(['sell_price', 'buy_price', 'aksi'])
                 ->make(true);
         }
-
-
 
         $productType = Product::whereNotNull('stock')
             ->groupBy('jenis')
@@ -54,6 +53,7 @@ class ProductController extends Controller
             ->sum('stock_mati');
         $products = Product::whereNotNull('stock')
             ->sum('stock');
+
         return view('admin.product.index', compact('productType', 'products', 'productSakit', 'productMati'));
     }
 
@@ -79,28 +79,28 @@ class ProductController extends Controller
         if ($request->stock_sakit) {
             Stock::create([
                 'product_id' => $product->id,
-                'status' => "Sakit",
+                'status' => 'Sakit',
                 'quantity' => $request->stock_sakit,
-                'tanggal' => date('Y-m-d')
+                'tanggal' => date('Y-m-d'),
             ]);
         }
         if ($request->stock_mati) {
             Stock::create([
                 'product_id' => $product->id,
-                'status' => "Mati",
+                'status' => 'Mati',
                 'quantity' => $request->stock_mati,
-                'tanggal' => date('Y-m-d')
+                'tanggal' => date('Y-m-d'),
             ]);
         }
         if ($request->stock) {
             Stock::create([
                 'product_id' => $product->id,
-                'status' => "Masuk",
+                'status' => 'Masuk',
                 'quantity' => $request->stock,
-                'tanggal' => date('Y-m-d')
+                'tanggal' => date('Y-m-d'),
             ]);
         }
-        activity(auth()->user()->name)->log('Menambah Produk  ' . $product->name);
+        activity(auth()->user()->name)->log('Menambah Produk  '.$product->name);
 
         return redirect()->route('products.index')->with('success', 'Data berhasil disimpan!!');
     }
@@ -108,6 +108,7 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::findOrFail($id);
+
         return view('admin.product.edit', compact('product'));
     }
 
@@ -115,6 +116,7 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $users = User::where('roles', 'USER')->get();
+
         return view('admin.product.show', compact('product', 'users'));
     }
 
@@ -122,13 +124,14 @@ class ProductController extends Controller
     {
         if (request()->ajax()) {
             $stock = Stock::where('product_id', $id)->with('product');
+
             return Datatables::of($stock->get())
                 ->addIndexColumn()
                 ->addColumn('tanggal', function ($data) {
                     return TanggalID($data->tanggal);
                 })
 
-                ->rawColumns(["tanggal"])
+                ->rawColumns(['tanggal'])
                 ->make(true);
         }
         $product = Product::findOrFail($id);
@@ -149,7 +152,7 @@ class ProductController extends Controller
             'stock' => 'required',
         ]);
         $product->update($request->all());
-        activity(auth()->user()->name)->log('Update Produk  ' . $product->name);
+        activity(auth()->user()->name)->log('Update Produk  '.$product->name);
 
         return redirect()->route('products.index')->with('success', 'Data berhasil disimpan!!');
     }
@@ -176,11 +179,11 @@ class ProductController extends Controller
                 'product_id' => $request->product_id,
                 'status' => $request->status,
                 'quantity' => $request->quantity,
-                'tanggal' => date('Y-m-d')
+                'tanggal' => date('Y-m-d'),
             ]);
-            if ($request->status == "Masuk") {
-                $product =  Product::findOrFail($request->product_id)->increment('stock', $request->quantity);
-            } elseif ($request->status == "Sakit") {
+            if ($request->status == 'Masuk') {
+                $product = Product::findOrFail($request->product_id)->increment('stock', $request->quantity);
+            } elseif ($request->status == 'Sakit') {
                 $product = Product::findOrFail($request->product_id);
                 $product->decrement('stock', $request->quantity);
                 $product->increment('stock_sakit', $request->quantity);
@@ -190,13 +193,15 @@ class ProductController extends Controller
                 $product->increment('stock_mati', $request->quantity);
             }
 
-            activity(auth()->user()->name)->log('Produk Stock ' . $request->status . ' ' . $request->quantity . ' ' . $product->name . ' ' . $product->type . ' ' . $product->jenis);
+            activity(auth()->user()->name)->log('Produk Stock '.$request->status.' '.$request->quantity.' '.$product->name.' '.$product->type.' '.$product->jenis);
 
             DB::commit();
+
             return redirect()->route('products.index')->with('success', 'data berhasil disimpan!!');
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error', 'data gagal disimpan!!' . $e->getMessage());
+
+            return back()->with('error', 'data gagal disimpan!!'.$e->getMessage());
         }
     }
 }

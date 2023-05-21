@@ -8,11 +8,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasFactory,SoftDeletes;
-    protected $guarded = ["id"];
+    use HasFactory;
+    use SoftDeletes;
+
+    protected $guarded = ['id'];
 
     public function rekanan()
     {
-        return $this->belongsTo(HargaRekanan::class,'id','product_id');
+        return $this->belongsTo(HargaRekanan::class, 'id', 'product_id');
     }
 }

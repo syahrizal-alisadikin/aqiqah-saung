@@ -19,7 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('productStock/{id}',[ApiController::class, 'productStock']);
-Route::get('product/{id}',[ApiController::class, 'product']);
-Route::get('rekanan/{id}',[ApiController::class, 'rekanan']);
-Route::get('order/{id}',[ApiController::class, 'order']);
+Route::get('productStock/{id}', [ApiController::class, 'productStock']);
+Route::get('product/{id}', [ApiController::class, 'product']);
+Route::get('rekanan/{id}', [ApiController::class, 'rekanan']);
+Route::get('order/{id}', [ApiController::class, 'order']);

@@ -27,7 +27,7 @@ class CreateOrdersTable extends Migration
             $table->string('total_harga');
             $table->string('alamat')->nullable();
             $table->string('note')->nullable();
-            $table->enum('status',['PENDING',"POTONG","KIRIM","SELESAI","BATAL","LUNAS"])->default('PENDING');
+            $table->enum('status', ['PENDING', 'POTONG', 'KIRIM', 'SELESAI', 'BATAL', 'LUNAS'])->default('PENDING');
             $table->date('tanggal_potong');
             $table->date('tanggal_acara')->nullable();
             $table->softDeletes();

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\User;
 use DataTables;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -18,21 +18,21 @@ class UserController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $users = User::where('roles','USER');
-             
-             return Datatables::of($users->get())
-                 ->addIndexColumn()
-                
-               
-                 ->addColumn('aksi', function ($data) {
-                     $edit = '<a href="'.route('users.edit',$data->id).'"  class="btn btn-primary btn-sm"> Edit </a>';
- 
-                     return $edit;
-                 
-                 })
-                 ->rawColumns(['aksi'])
-                 ->make(true);
-         }
+            $users = User::where('roles', 'USER');
+
+            return Datatables::of($users->get())
+                ->addIndexColumn()
+
+                ->addColumn('aksi', function ($data) {
+                    $edit = '<a href="'.route('users.edit', $data->id).'"  class="btn btn-primary btn-sm"> Edit </a>';
+
+                    return $edit;
+
+                })
+                ->rawColumns(['aksi'])
+                ->make(true);
+        }
+
         return view('admin.users.index');
     }
 
@@ -44,13 +44,12 @@ class UserController extends Controller
     public function create()
     {
         return view('admin.users.create');
-        
+
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -62,11 +61,11 @@ class UserController extends Controller
             'phone' => 'required|unique:users',
             'image' => 'required|mimes:jpeg,jpg,png',
         ]);
-            //upload image
+        //upload image
         $image = $request->file('image');
         $data['foto'] = $image->hashName();
         $image->storeAs('public/profile', $image->hashName());
-         
+
         // Create user
         $user = User::create([
             'name' => $request->name,
@@ -78,10 +77,10 @@ class UserController extends Controller
             'foto' => $data['foto'],
 
         ]);
-        activity(auth()->user()->name)->log('Menambah rekanan  ' . $user->name);
+        activity(auth()->user()->name)->log('Menambah rekanan  '.$user->name);
 
         return redirect()->route('users.index')->with('success', 'Data berhasil disimpan!!');
-        
+
     }
 
     /**
@@ -104,13 +103,13 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
+
         return view('admin.users.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -119,36 +118,34 @@ class UserController extends Controller
         //update user
         $data = $request->all();
         $this->validate($request, [
-            'name'      => 'required',
+            'name' => 'required',
             'email' => 'required|email',
             'phone' => 'required',
             'alamat' => 'required',
 
-        ]);  
+        ]);
         $user = User::find($id);
-        
-        
-           
-            if($request->hasFile('image')){
-                //upload image
-                $image = $request->file('image');
-                $data['foto'] = $image->hashName();
-                $image->storeAs('public/profile', $image->hashName());
-                    if(Storage::exists('public/profile')){
-                        $image = Storage::disk('local')->delete('public/profile/'.$user->foto);
-                    }
-                }
-            $user->update([
-                'name'      => $request->input('name'),
-                // 'last_name' => $request->input('last_name'),
-                'email'     => $request->input('email'),
-                'phone'     => $request->input('phone'),
-                'alamat'    => $request->input('alamat'),
-                'foto'      => $data['foto'] ?? $user->foto,
 
-            ]);
+        if ($request->hasFile('image')) {
+            //upload image
+            $image = $request->file('image');
+            $data['foto'] = $image->hashName();
+            $image->storeAs('public/profile', $image->hashName());
+            if (Storage::exists('public/profile')) {
+                $image = Storage::disk('local')->delete('public/profile/'.$user->foto);
+            }
+        }
+        $user->update([
+            'name' => $request->input('name'),
+            // 'last_name' => $request->input('last_name'),
+            'email' => $request->input('email'),
+            'phone' => $request->input('phone'),
+            'alamat' => $request->input('alamat'),
+            'foto' => $data['foto'] ?? $user->foto,
 
-            return redirect()->route('users.index')->with('success', 'Data berhasil disimpan!!');
+        ]);
+
+        return redirect()->route('users.index')->with('success', 'Data berhasil disimpan!!');
     }
 
     /**

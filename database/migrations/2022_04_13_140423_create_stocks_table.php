@@ -16,8 +16,8 @@ class CreateStocksTable extends Migration
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('product_id');
-            $table->enum('status',["Sakit","Mati","Masuk"])->default("Masuk");
-            $table->integer("quantity");
+            $table->enum('status', ['Sakit', 'Mati', 'Masuk'])->default('Masuk');
+            $table->integer('quantity');
             $table->date('tanggal');
 
             $table->foreign('product_id')->references('id')->on('products');

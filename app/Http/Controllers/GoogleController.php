@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -21,13 +20,14 @@ class GoogleController extends Controller
             $findUser = User::where('email', $user->email)->first();
             if ($findUser) {
                 Auth::login($findUser);
+
                 return redirect()->route('dashboard');
             } else {
-                return redirect()->route('login')->with('error', 'User ' . $user->name . ' Belum Terdaftar');
+                return redirect()->route('login')->with('error', 'User '.$user->name.' Belum Terdaftar');
             }
         } catch (\Exception $e) {
 
-            return redirect()->route('login')->with('error', 'Google Login Error ' . $e->getMessage());
+            return redirect()->route('login')->with('error', 'Google Login Error '.$e->getMessage());
         }
     }
 }

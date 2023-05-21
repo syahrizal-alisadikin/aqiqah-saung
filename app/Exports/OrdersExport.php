@@ -2,7 +2,6 @@
 
 namespace App\Exports;
 
-use App\Models\Order;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 
@@ -15,10 +14,11 @@ class OrdersExport implements FromView
     {
         $this->data = $data;
     }
+
     public function view(): View
     {
         return view('exports.orders-excel', [
-            'orders' => $this->data
+            'orders' => $this->data,
         ]);
     }
 }
