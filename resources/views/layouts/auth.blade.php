@@ -165,6 +165,7 @@
           callback: function (credentialResponse) {
          let response = credentialResponse;
          var token = $("meta[name='csrf-token']").attr("content");
+         console.log(JSON.stringify({credential: response.credential}))
          $.ajax({
             type: 'POST',
             url: '/auth/ontap',
@@ -172,7 +173,7 @@
               "X-CSRF-TOKEN": token
             },
             contentType: 'application/JSON; charset=utf-8',
-            data: JSON.stringify({credential: response.credential}),
+            data: {credential: response.credential},
             success: function (data) {
               console.log(data)
                       }            
