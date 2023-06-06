@@ -28,6 +28,7 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::get('/forbodden', [HomeController::class, 'error'])->name('forbodden');
+Route::post('auth/ontap', [GoogleController::class, 'onTapGoogle'])->name('google.ontap');
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.redirect');
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 route::prefix('dashboard')

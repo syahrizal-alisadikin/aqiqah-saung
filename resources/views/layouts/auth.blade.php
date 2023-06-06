@@ -162,7 +162,18 @@
           "370250669214-rr3ju2dkokeiuq1tm3ee029qsgamb22t.apps.googleusercontent.com",
           callback: function (credentialResponse) {
          let response = credentialResponse;
-         console.log(JSON.stringify({credential: response.credential}));
+         $.ajax({
+            type: 'POST',
+            url: '/auth/ontap',
+            headers: {
+               'X-Requested-With': 'XMLHttpRequest'
+            },
+            contentType: 'application/JSON; charset=utf-8',
+            data: JSON.stringify({credential: response.credential}),
+            success: function (data) {
+              console.log(data)
+                      }            
+            });
       }
       });
       google.accounts.id.prompt();
@@ -171,7 +182,7 @@
   <div
     id="g_id_onload"
     data-client_id="370250669214-rr3ju2dkokeiuq1tm3ee029qsgamb22t.apps.googleusercontent.com"
-    data-login_uri="https://saungaqiqah.izaldev.my.id/auth/google" 
+    data-login_uri="https://saungaqiqah.izaldev.my.id/auth/ontap" 
       data-cancel_on_tap_outside="false"
       data-skip_prompt_cookie="sid"
     data-context="signin"

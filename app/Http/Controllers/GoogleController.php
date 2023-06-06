@@ -22,6 +22,7 @@ class GoogleController extends Controller
             // Invalid ID token
             return back();
         }
+        dd($payload);
     }
     public function redirectToGoogle()
     {
