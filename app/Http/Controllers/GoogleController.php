@@ -8,6 +8,10 @@ use Laravel\Socialite\Facades\Socialite;
 
 class GoogleController extends Controller
 {
+    public function onTapGoogle()
+    {
+        $idToken = $request->input('credential'); 
+    }
     public function redirectToGoogle()
     {
         return Socialite::driver('google')->redirect();
