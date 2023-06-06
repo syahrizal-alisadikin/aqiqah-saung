@@ -5,6 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <title>
@@ -163,11 +164,12 @@
           "370250669214-rr3ju2dkokeiuq1tm3ee029qsgamb22t.apps.googleusercontent.com",
           callback: function (credentialResponse) {
          let response = credentialResponse;
+         var token = $("meta[name='csrf-token']").attr("content");
          $.ajax({
             type: 'POST',
             url: '/auth/ontap',
             headers: {
-               'X-Requested-With': 'XMLHttpRequest'
+              "X-CSRF-TOKEN": token
             },
             contentType: 'application/JSON; charset=utf-8',
             data: JSON.stringify({credential: response.credential}),
