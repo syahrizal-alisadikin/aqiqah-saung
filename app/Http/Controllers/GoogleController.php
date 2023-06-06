@@ -11,11 +11,11 @@ class GoogleController extends Controller
 {
     public function onTapGoogle(Request $request)
     {
-        $idToken = $request->input('credential');
+        $idToken = $request->credential;
         $client = new \Google_Client([
             'client_id' => config('services.google.client_id')
         ]);
-        dd($request->all());
+        dd($request->credential);
         $payload = $client->verifyIdToken($idToken);
 
         if (!$payload) {
