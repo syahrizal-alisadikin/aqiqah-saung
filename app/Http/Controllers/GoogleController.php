@@ -11,13 +11,13 @@ class GoogleController extends Controller
 {
     public function onTapGoogle(Request $request)
     {
-        $idToken = $request->input('credential'); 
-        $client = new Google_Client([
+        $idToken = $request->input('credential');
+        $client = new \Google_Client([
             'client_id' => config('services.google')
         ]);
-        
+
         $payload = $client->verifyIdToken($idToken);
-        
+
         if (!$payload) {
             // Invalid ID token
             return back();
@@ -39,11 +39,11 @@ class GoogleController extends Controller
 
                 return redirect()->route('dashboard');
             } else {
-                return redirect()->route('login')->with('error', 'User '.$user->name.' Belum Terdaftar');
+                return redirect()->route('login')->with('error', 'User ' . $user->name . ' Belum Terdaftar');
             }
         } catch (\Exception $e) {
 
-            return redirect()->route('login')->with('error', 'Google Login Error '.$e->getMessage());
+            return redirect()->route('login')->with('error', 'Google Login Error ' . $e->getMessage());
         }
     }
 }
