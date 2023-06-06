@@ -172,8 +172,9 @@
             headers: {
               "X-CSRF-TOKEN": token
             },
-            contentType: 'application/JSON; charset=utf-8',
-            data: {credential: response.credential},
+            data: {
+              credential: "Test"
+            },
             success: function (data) {
               console.log(data)
                       }            
