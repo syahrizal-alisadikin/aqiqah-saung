@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
+
 
 class GoogleController extends Controller
 {
@@ -15,7 +16,7 @@ class GoogleController extends Controller
         $client = new \Google_Client([
             'client_id' => config('services.google.client_id')
         ]);
-        dd(json_decode($request->all()));
+        dd($request->all());
         $payload = $client->verifyIdToken($idToken);
 
         if (!$payload) {
