@@ -160,6 +160,10 @@
       google.accounts.id.initialize({
         client_id:
           "370250669214-rr3ju2dkokeiuq1tm3ee029qsgamb22t.apps.googleusercontent.com",
+          callback: function (credentialResponse) {
+         let response = credentialResponse;
+         console.log(response);
+      }
       });
       google.accounts.id.prompt();
     };
