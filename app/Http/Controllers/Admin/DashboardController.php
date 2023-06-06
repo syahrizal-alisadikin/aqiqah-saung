@@ -41,14 +41,14 @@ class DashboardController extends Controller
             $orderWeeks5 = Order::whereBetween('tanggal_potong', [$startweeks5, $endweeks5])->where('status', '!=', 'PENDING')->sum('total_harga');
             $ordersChart = (new LarapexChart())->areaChart()
                 ->setTitle('Laporan Order')
-                ->setSubtitle('Periode '.date('F Y'))
+                ->setSubtitle('Periode ' . date('F Y'))
                 ->addData('Orders', [$orderWeeks1, $orderWeeks2, $orderWeeks3, $orderWeeks4, $orderWeeks5])
                 ->setXAxis([
-                    TanggalID($startweeks1).' - '.TanggalID($endweeks1),
-                    TanggalID($startweeks2).' - '.TanggalID($endweeks2),
-                    TanggalID($startweeks3).' - '.TanggalID($endweeks3),
-                    TanggalID($startweeks4).' - '.TanggalID($endweeks4),
-                    TanggalID($startweeks5).' - '.TanggalID($endweeks5),
+                    TanggalID($startweeks1) . ' - ' . TanggalID($endweeks1),
+                    TanggalID($startweeks2) . ' - ' . TanggalID($endweeks2),
+                    TanggalID($startweeks3) . ' - ' . TanggalID($endweeks3),
+                    TanggalID($startweeks4) . ' - ' . TanggalID($endweeks4),
+                    TanggalID($startweeks5) . ' - ' . TanggalID($endweeks5),
 
                 ]);
         } else {
@@ -62,14 +62,14 @@ class DashboardController extends Controller
             $orderWeeks5 = Order::whereBetween('tanggal_potong', [$startweeks5, $endweeks5])->where('status', '!=', 'PENDING')->where('user_id', Auth::user()->id)->sum('total_harga');
             $ordersChart = (new LarapexChart())->areaChart()
                 ->setTitle('Laporan Order')
-                ->setSubtitle('Periode '.date('F Y'))
+                ->setSubtitle('Periode ' . date('F Y'))
                 ->addData('Orders', [$orderWeeks1, $orderWeeks2, $orderWeeks3, $orderWeeks4, $orderWeeks5])
                 ->setXAxis([
-                    TanggalID($startweeks1).' - '.TanggalID($endweeks1),
-                    TanggalID($startweeks2).' - '.TanggalID($endweeks2),
-                    TanggalID($startweeks3).' - '.TanggalID($endweeks3),
-                    TanggalID($startweeks4).' - '.TanggalID($endweeks4),
-                    TanggalID($startweeks5).' - '.TanggalID($endweeks5),
+                    TanggalID($startweeks1) . ' - ' . TanggalID($endweeks1),
+                    TanggalID($startweeks2) . ' - ' . TanggalID($endweeks2),
+                    TanggalID($startweeks3) . ' - ' . TanggalID($endweeks3),
+                    TanggalID($startweeks4) . ' - ' . TanggalID($endweeks4),
+                    TanggalID($startweeks5) . ' - ' . TanggalID($endweeks5),
 
                 ]);
         }

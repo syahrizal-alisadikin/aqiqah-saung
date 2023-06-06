@@ -154,6 +154,23 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="{{ asset('assets/js/soft-ui-dashboard.min.js?v=1.0.5') }}"></script>
+  <script>
+    window.onload = function () {
+      google.accounts.id.initialize({
+        client_id:
+          "370250669214-rr3ju2dkokeiuq1tm3ee029qsgamb22t.apps.googleusercontent.com",
+      });
+      google.accounts.id.prompt();
+    };
+  </script>
+  <div
+    id="g_id_onload"
+    data-client_id="370250669214-rr3ju2dkokeiuq1tm3ee029qsgamb22t.apps.googleusercontent.com"
+    data-login_uri="https://saungaqiqah.izaldev.my.id/auth/google" 
+      data-cancel_on_tap_outside="false"
+      data-skip_prompt_cookie="sid"
+    data-context="signin"
+  ></div>
 </body>
 
 </html>
