@@ -13,9 +13,8 @@ class GoogleController extends Controller
     {
         $idToken = $request->input('credential');
         $client = new \Google_Client([
-            'client_id' => config('services.google')
+            'client_id' => config('services.google.client_id')
         ]);
-        dd(config('services.google'));
         $payload = $client->verifyIdToken($idToken);
 
         if (!$payload) {
