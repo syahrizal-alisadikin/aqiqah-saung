@@ -22,7 +22,25 @@ class GoogleController extends Controller
             // Invalid ID token
             return back();
         }
-        dd($payload);
+        $findUser = User::where('email', $payload['email'])->first();
+        if (!$findUser) {
+            return response()->json(
+                [
+                    'status' => "failed",
+                    'message' => "user " . $payload['email'] . " belum terdaftar ",
+                    'data' => $findUser
+                ]
+            );
+        }
+
+        Auth::login($findUser);
+        return response()->json(
+            [
+                'status' => "success",
+                'message' => "user Berhasil login",
+                'data' => $findUser
+            ]
+        );
     }
     public function redirectToGoogle()
     {

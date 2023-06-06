@@ -21,6 +21,7 @@
   <link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="{{ asset('assets/css/soft-ui-dashboard.css?v=1.0.5') }}" rel="stylesheet" />
+
 </head>
 
 <body class="">
@@ -154,8 +155,10 @@
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="{{ asset('assets/js/soft-ui-dashboard.min.js?v=1.0.5') }}"></script>
+  {{-- <script src="{{ asset('assets/js/soft-ui-dashboard.min.js?v=1.0.5') }}"></script> --}}
   <script src="https://code.jquery.com/jquery-3.5.1.min.js" ></script>
+  <script src="{{ asset('assets/js/sweetalert.min.js') }}"></script>
+
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script>
     window.onload = function () {
@@ -177,9 +180,22 @@
               credential: response.credential
             },
             success: function (data) {
-              console.log(data)
-                      }            
-            });
+              if(data.status == "success"){
+                window.location('https://saungaqiqah.izaldev.my.id/dashboard/admin')
+              }else{
+                swal({
+                type: "error",
+                icon: "error",
+                title: "GAGAL!",
+                text: data.message,
+                timer: 5000,
+                showConfirmButton: false,
+                showCancelButton: false,
+                buttons: false,
+                });
+              }
+            }            
+          });
       }
       });
       google.accounts.id.prompt();
