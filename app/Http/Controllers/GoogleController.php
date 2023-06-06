@@ -5,12 +5,23 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use Symfony\Component\HttpFoundation\Request;
 
 class GoogleController extends Controller
 {
-    public function onTapGoogle()
+    public function onTapGoogle(Request $request)
     {
         $idToken = $request->input('credential'); 
+        $client = new Google_Client([
+            'client_id' => config('services.google')
+        ]);
+        
+        $payload = $client->verifyIdToken($idToken);
+        
+        if (!$payload) {
+            // Invalid ID token
+            return back();
+        }
     }
     public function redirectToGoogle()
     {
