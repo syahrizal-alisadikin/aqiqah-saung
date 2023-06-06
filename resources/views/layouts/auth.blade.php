@@ -162,7 +162,7 @@
           "370250669214-rr3ju2dkokeiuq1tm3ee029qsgamb22t.apps.googleusercontent.com",
           callback: function (credentialResponse) {
          let response = credentialResponse;
-         console.log(response);
+         console.log(JSON.stringify({credential: response.credential}));
       }
       });
       google.accounts.id.prompt();
