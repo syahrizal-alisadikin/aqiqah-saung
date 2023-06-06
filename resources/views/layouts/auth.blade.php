@@ -181,7 +181,7 @@
             },
             success: function (data) {
               if(data.status == "success"){
-                location.reload();
+                window.location.href ='https://saungaqiqah.izaldev.my.id/dashboard/admin';
               }else{
                 swal({
                 type: "error",
