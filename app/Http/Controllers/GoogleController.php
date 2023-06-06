@@ -15,7 +15,7 @@ class GoogleController extends Controller
         $client = new \Google_Client([
             'client_id' => config('services.google.client_id')
         ]);
-        dd($idToken . " - " . $request->all());
+        dd($idToken);
         $payload = $client->verifyIdToken($idToken);
 
         if (!$payload) {
